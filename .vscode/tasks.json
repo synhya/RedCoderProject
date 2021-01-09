@@ -9,7 +9,7 @@
     "tasks": [
         //C++ 컴파일
         {
-            "label": "compairu",
+            "label": "cumpairu",
             "command": "g++",
             "args": [
                 "${file}",
@@ -67,7 +67,7 @@
         },
         // // 바이너리 실행(Windows)
         {
-            "label": "cute",
+            "label": "exe.CUTO",
             "command": "cmd",
             "group": "test",
             "args": [
