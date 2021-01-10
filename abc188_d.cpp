@@ -297,43 +297,9 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-/******************* START  *******************/
-
-const int N = 100 * 1000 + 13;
-vi d, g[N];
-
-vpi construct(int st, vi d)
-{
-    if (d.empty())
-        return vpi();
-
-    vpi res;
-    rep(i, d[0]) rep2(j, (st + i + 1), st + d.back())
-        res.pb({st + i, j});
-
-    int nxt = st + d[0];
-    for (int i = 1; i < int(d.si()); i++)
-        d[i] -= d[0];
-    d.erase(d.begin());
-    if (!d.empty())
-        d.pop_back();
-
-    auto tmp = construct(nxt, d);
-    for (auto it : tmp)
-        res.pb(it);
-
-    return res;
-}
+//const int N = 300005;
 
 int main()
 {
-    INT(n);
-    d.resize(n);
-    rep(i, n) d[i] = in();
-    auto res = construct(0, d);
-    cout << int(res.size()) << endl;
-    for (auto it : res)
-        cout << it.fi + 1 << " " << it.se + 1 << endl;
-
-    return 0;
+    
 }

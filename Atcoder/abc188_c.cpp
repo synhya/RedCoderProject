@@ -297,43 +297,30 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-/******************* START  *******************/
-
-const int N = 100 * 1000 + 13;
-vi d, g[N];
-
-vpi construct(int st, vi d)
-{
-    if (d.empty())
-        return vpi();
-
-    vpi res;
-    rep(i, d[0]) rep2(j, (st + i + 1), st + d.back())
-        res.pb({st + i, j});
-
-    int nxt = st + d[0];
-    for (int i = 1; i < int(d.si()); i++)
-        d[i] -= d[0];
-    d.erase(d.begin());
-    if (!d.empty())
-        d.pop_back();
-
-    auto tmp = construct(nxt, d);
-    for (auto it : tmp)
-        res.pb(it);
-
-    return res;
-}
+//const int N = 300005;
 
 int main()
 {
     INT(n);
-    d.resize(n);
-    rep(i, n) d[i] = in();
-    auto res = construct(0, d);
-    cout << int(res.size()) << endl;
-    for (auto it : res)
-        cout << it.fi + 1 << " " << it.se + 1 << endl;
+    pii a[200005]; // a.fi -> rating a.se -> idx(ans)
+    rep2(i, 1, pow(2, n))
+    {
+        a[i].fi = in();
+        a[i].se = i;
+    }
 
-    return 0;
+    rep2(i, 1, n - 1)
+    {
+        rep2(j, 1, pow(2, n - i))
+        {
+            if (a[2 * j - 1].fi > a[2 * j].fi)
+                a[j] = a[2 * j - 1];
+            else
+            {
+                a[j] = a[2 * j];
+            }
+        }
+    }
+    // a[1].fi > a[2].fi ? cout << a[2].se : cout << a[1].se; //괄호꼭넣기
+    cout << (a[1].fi > a[2].fi ? a[2].se : a[1].se) << endl;
 }

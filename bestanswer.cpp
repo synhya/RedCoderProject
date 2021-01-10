@@ -297,43 +297,53 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-/******************* START  *******************/
+//const int N = 300005;
 
-const int N = 100 * 1000 + 13;
-vi d, g[N];
+int d[305];
 
-vpi construct(int st, vi d)
-{
-    if (d.empty())
-        return vpi();
-
-    vpi res;
-    rep(i, d[0]) rep2(j, (st + i + 1), st + d.back())
-        res.pb({st + i, j});
-
-    int nxt = st + d[0];
-    for (int i = 1; i < int(d.si()); i++)
-        d[i] -= d[0];
-    d.erase(d.begin());
-    if (!d.empty())
-        d.pop_back();
-
-    auto tmp = construct(nxt, d);
-    for (auto it : tmp)
-        res.pb(it);
-
-    return res;
-}
-
+bool chk[1050][1050];
 int main()
 {
     INT(n);
-    d.resize(n);
-    rep(i, n) d[i] = in();
-    auto res = construct(0, d);
-    cout << int(res.size()) << endl;
-    for (auto it : res)
-        cout << it.fi + 1 << " " << it.se + 1 << endl;
+    rep2(i, 1, n) d[i] = in();
+    // 3 // 2,3,4
+    int X = d[n] + 1;
 
-    return 0;
+    int st = 1, en = d[n] + 1; // 1, 5
+    int sti = 1, eni = n;      // 1, 3
+    while (1)
+    {
+        if (sti == eni)
+        { // case d 1
+            rep2(i, st, en) rep2(j, i + 1, en) chk[i][j] = true;
+            break; // 1,2 1,5 ~ 4,5
+        }
+        if (sti + 1 == eni)
+        { // case d 2
+            for (i = st; i < st + in[sti]; i++)
+                for (j = st; j <= en; j++)
+                    chk[i][j] = true;
+            break;
+        }
+
+        for (i = sti + 1; i <= eni - 1; i++)
+            in[i] -= in[sti];
+
+        for (i = st; i < st + in[sti]; i++)
+            for (j = st; j <= en; j++)
+                chk[i][j] = true;
+        st = st + in[sti];
+        en = st + in[eni - 1];
+        sti++, eni--;
+    }
+
+    vector<pii> Va;
+    for (i = 1; i <= X; i++)
+        for (j = i + 1; j <= X; j++)
+            if (chk[i][j] || chk[j][i])
+                Va.emplace_back(i, j);
+
+    printf("%d\n", (int)Va.size());
+    for (auto it : Va)
+        printf("%d %d\n", it.first, it.second);
 }
