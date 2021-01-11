@@ -47,7 +47,7 @@ int main()
     {
         std::cout << "Not Found\n";
     }
-    for (auto &elm : uset)
+    for (auto elm : uset)
     {
         std::cout << elm << " ";
     }

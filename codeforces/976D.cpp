@@ -297,11 +297,38 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-//const int N = 300005;
+vi d;
+vi g[100005];
 
+vpi construct(int st, vi d) // constructing edges function
+{
+    if (d.empty()) // for recursion
+        return vpi();
+    vpi res;
+    rep(i, d[0]) rep2(j, st + i + 1, st + d.back()) res.pb({st + i, j});
+    // 1 ~ d1 까지 2 부터 dn+1 까지 1,2 1,3 ... 1,dn+1 2,3 .. 2,dn+1 .. d1,d1 +1 .. d1,dn+1 연결
+    int nxt = st + d[0]; // keeps the index so that we can printout
+                         // even if we erase begining we still have initial index in st
+    for (int i = 1; i < int(d.size()); ++i)
+        d[i] -= d[0];
+    d.erase(d.begin());
+    if (!d.empty())
+        d.pop_back(); // erases start and the end ( d1 ~ dn >> d2 ~ dn-1 )
+
+    auto tmp = construct(nxt, d); // recursion of d2 ~ dn-1
+    for (auto it : tmp)           // tmp = return res(vpi) of recursion
+        res.push_back(it);        // from return vpi(); keeps stacking up res with return res;
+
+    return res;
+}
 int main()
 {
-    TEST
-    {
-    }
+    INT(n);
+    d.resize(n); // reserve > not size only capacity but resize > initialize with 0s
+    rep(i, n) d[i] = in();
+    auto res = construct(0, d);
+    cout << res.size() << endl; // res is vpi
+    for (auto it : res)         // in each fi,se stores vertices of each edge.
+        cout << it.fi + 1 << " " << it.se + 1 << endl;
+    return 0;
 }

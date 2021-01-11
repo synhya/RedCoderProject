@@ -299,9 +299,89 @@ struct Setup_io
 
 //const int N = 300005;
 
+struct creature
+{
+    int hp, dmg;
+    // 2spell
+};
+
 int main()
 {
-    TEST
+    INT(n, a, b);
+    creature c[10000];
+    pii sdmg[10000], shp[10000];
+    int ahp, bhp, tdmg = 0;
+    vi idx(n, 1);
+    rep(i, n)
     {
+        c[i].hp = in();
+        c[i].dmg = in();
+        sdmg[i].fi = c[i].hp - c[i].dmg;
+        sdmg[i].se = i; // to refer c
+        shp[i].fi = c[i].hp;
+        shp[i].se = i;
     }
+    sort(sdmg, sdmg + n, [](pii a, pii b) { return a.fi > b.fi; });
+    sort(shp, shp + n, [](pii a, pii b) { return a.fi > b.fi; });
+    rep(i, n) tdmg += c[i].dmg;
+    pii mx = {0, 0};
+
+    if (b)
+    {
+        bhp = c[sdmg[0].se].hp * int(pow(2, a)) - c[sdmg[0].se].dmg;
+        if (a)
+        { // a 스펠을 sdmg에 쓰지않고 shp에 쓸 가치가 있는가.
+            for (int i = 0; c[shp[i].se].hp > c[sdmg[0].se].hp; i++)
+            {
+                ahp = c[shp[i].se].hp * int(pow(2, a)) - c[shp[i].se].dmg;
+                if (mx.fi < ahp)
+                {
+                    mx.fi = ahp;
+                    mx.se = shp[i].se; // idx
+                }
+            }
+            if (mx.fi > bhp && mx.fi > 0)
+            {
+                tdmg += mx.fi;
+                idx[mx.se] = 0;
+                --b;
+                if (sdmg[0].fi > 0)
+                { // a는 있고 a를 shp에 쓴경우
+                    tdmg += c[sdmg[0].se].hp - c[sdmg[0].se].dmg;
+                    idx[sdmg[0].se] = 0;
+                    --b;
+                }
+            }
+            else if (bhp > 0)
+            { // a는 있고 a를 dsmg에 쓴 경우
+                tdmg += bhp;
+                idx[sdmg[0].se] = 0;
+                --b;
+            }
+        }
+        else if (sdmg[0].fi > 0)
+        {
+            tdmg += c[sdmg[0].se].hp - c[sdmg[0].se].dmg;
+            idx[sdmg[0].se] = 0;
+            --b;
+        } // a는 없고 b는 있는경우
+
+        if (b) // a스펠을 sdmg[0]에 썻는가
+            rep2(i, 1, b)
+            {
+                if (sdmg[i].fi <= 0) // c[i].hp - c[i].dmg;
+                    break;
+
+                if (idx[sdmg[i].se])
+                {
+                    tdmg += c[sdmg[i].se].hp - c[sdmg[i].se].dmg;
+                    idx[sdmg[i].se] = 0;
+                }
+                else
+                {
+                    ++b; // didnt use spell
+                }
+            }
+    }
+    cout << tdmg << endl;
 }

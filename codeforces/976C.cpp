@@ -297,43 +297,30 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-/******************* START  *******************/
-
-const int N = 100 * 1000 + 13;
-vi d, g[N];
-
-vpi construct(int st, vi d)
-{
-    if (d.empty())
-        return vpi();
-
-    vpi res;
-    rep(i, d[0]) rep2(j, (st + i + 1), st + d.back())
-        res.pb({st + i, j});
-
-    int nxt = st + d[0];
-    for (int i = 1; i < int(d.si()); i++)
-        d[i] -= d[0];
-    d.erase(d.begin());
-    if (!d.empty())
-        d.pop_back();
-
-    auto tmp = construct(nxt, d);
-    for (auto it : tmp)
-        res.pb(it);
-
-    return res;
-}
-
 int main()
 {
     INT(n);
-    d.resize(n);
-    rep(i, n) d[i] = in();
-    auto res = construct(0, d);
-    cout << int(res.size()) << endl;
-    for (auto it : res)
-        cout << it.fi + 1 << " " << it.se + 1 << endl;
+    pair<pii, int> a[10005];
+    rep(i, n)
+    {
+        a[i].fi.fi = in();
+        a[i].fi.se = in();
+        a[i].se = i + 1; // index
+    }
+    sort(a, a + n, [](pair<pii, int> a, pair<pii, int> b) {if (a.fi.fi != b.fi.fi) return a.fi.fi < b.fi.fi; return a.fi.se > b.fi.se ; }); //dont use iterator in static array
+    // [] because a, a+n is pointer(iterator)
 
+    int mx = 0, idx = 0;
+    rep(i, n)
+    {
+        if (a[i].fi.se <= mx)
+        {
+            cout << a[i].se << " " << idx << endl;
+            return 0;
+        }
+        mx = a[i].fi.se;
+        idx = a[i].se;
+    }
+    cout << "-1 -1";
     return 0;
 }
