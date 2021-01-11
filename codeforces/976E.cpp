@@ -297,91 +297,74 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-//const int N = 300005;
+const int N = 200 * 1000 + 9;
+int hp[N], dmg[N];
 
-struct creature
+bool cmp(int i, int j)
 {
-    int hp, dmg;
-    // 2spell
-};
+    if (hp[i] - dmg[i] != hp[j] - dmg[j])
+        return hp[i] - dmg[i] > hp[j] - dmg[j];
+    return i < j;
+}
+
+int get(int id)
+{
+    return hp[id] > dmg[id] ? hp[id] : dmg[id];
+}
 
 int main()
 {
     INT(n, a, b);
-    creature c[10000];
-    pii sdmg[10000], shp[10000];
-    int ahp, bhp, tdmg = 0;
-    vi idx(n, 1);
     rep(i, n)
     {
-        c[i].hp = in();
-        c[i].dmg = in();
-        sdmg[i].fi = c[i].hp - c[i].dmg;
-        sdmg[i].se = i; // to refer c
-        shp[i].fi = c[i].hp;
-        shp[i].se = i;
+        hp[i] = in();
+        dmg[i] = in();
     }
-    sort(sdmg, sdmg + n, [](pii a, pii b) { return a.fi > b.fi; });
-    sort(shp, shp + n, [](pii a, pii b) { return a.fi > b.fi; });
-    rep(i, n) tdmg += c[i].dmg;
-    pii mx = {0, 0};
+    b = min(b, n);
+    vi p(n);
+    rep(i, n) p[i] = i;
+    sort(p.begin(), p.end(), cmp); // call cmp by pointer(noparameters)
+    // p sorted by hp-dmg in desc
+    ll res = 0, sum = 0;
 
-    if (b)
+    rep(i, n)
     {
-        bhp = c[sdmg[0].se].hp * int(pow(2, a)) - c[sdmg[0].se].dmg;
-        if (a)
-        { // a 스펠을 sdmg에 쓰지않고 shp에 쓸 가치가 있는가.
-            for (int i = 0; c[shp[i].se].hp > c[sdmg[0].se].hp; i++)
-            {
-                ahp = c[shp[i].se].hp * int(pow(2, a)) - c[shp[i].se].dmg;
-                if (mx.fi < ahp)
-                {
-                    mx.fi = ahp;
-                    mx.se = shp[i].se; // idx
-                }
-            }
-            if (mx.fi > bhp && mx.fi > 0)
-            {
-                tdmg += mx.fi;
-                idx[mx.se] = 0;
-                --b;
-                if (sdmg[0].fi > 0)
-                { // a는 있고 a를 shp에 쓴경우
-                    tdmg += c[sdmg[0].se].hp - c[sdmg[0].se].dmg;
-                    idx[sdmg[0].se] = 0;
-                    --b;
-                }
-            }
-            else if (bhp > 0)
-            { // a는 있고 a를 dsmg에 쓴 경우
-                tdmg += bhp;
-                idx[sdmg[0].se] = 0;
-                --b;
-            }
-        }
-        else if (sdmg[0].fi > 0)
-        {
-            tdmg += c[sdmg[0].se].hp - c[sdmg[0].se].dmg;
-            idx[sdmg[0].se] = 0;
-            --b;
-        } // a는 없고 b는 있는경우
-
-        if (b) // a스펠을 sdmg[0]에 썻는가
-            rep2(i, 1, b)
-            {
-                if (sdmg[i].fi <= 0) // c[i].hp - c[i].dmg;
-                    break;
-
-                if (idx[sdmg[i].se])
-                {
-                    tdmg += c[sdmg[i].se].hp - c[sdmg[i].se].dmg;
-                    idx[sdmg[i].se] = 0;
-                }
-                else
-                {
-                    ++b; // didnt use spell
-                }
-            }
+        int id = p[i];
+        if (i < b)
+            sum += get(id);
+        // 만약 dmg가 get되어서 b가 안써져도
+        // 그 다음 id부터 계속 b안쓸거니까 b사용여부체크안해도됨
+        else
+            sum += dmg[id];
+    } // used all b card
+    res = sum;
+    if (b == 0)
+    {
+        cout << res << endl;
+        return 0;
     }
-    cout << tdmg << endl;
+
+    ll x = (1LL << a);
+    rep(i, n)
+    {
+        int id = p[i];
+        ll nres = sum;
+        if (i < b)
+        { // b에사용된 카드중에 a고르는 경우
+            nres -= get(id);
+            nres += hp[id] * x;
+            res = max(res, nres);
+        }
+        else
+        { // a > 0, b==0인경우는? 앞에서..
+            nres -= dmg[id];
+            nres += hp[id] * x;
+            int id2 = p[b - 1]; // b 바깥에서 쓴 경우이므로
+            nres -= get(id2);
+            nres += dmg[id2];
+            res = max(res, nres);
+        }
+    }
+    cout << res << endl;
+    return 0;
 }
