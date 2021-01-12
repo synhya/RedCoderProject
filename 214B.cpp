@@ -313,8 +313,56 @@ int main()
         cout << -1 << endl;
         return 0;
     }
-    rep(i, n)
-    { // find maximum
-        if ()
+    if (d.size() == 1)
+    {
+        if (d[0] % 3 == 0)
+        {
+            cout << d[0] << endl;
+            return 0;
+        }
+        else
+        {
+            cout << -1 << endl;
+            return 0;
+        }
     }
+
+    int rm = 0;
+    rep3(i, n - 1, 1) // d[0] should be "0"
+    {
+        // find maximum
+        rm = (rm * 10 + d[i]) % 3;
+    }
+    if (rm == 0)
+    {
+        rep3(i, n - 1, 0)
+        {
+            cout << d[i];
+        }
+        return 0;
+    }
+
+    int tmp;
+    rep2(s, 2, n - 1) rep3(t, s, 1)
+    {
+        tmp = d[t];
+        d[t] = d[t + 1];
+        d[t + 1] = tmp;
+        rm = 0;
+        rep3(i, n - 1, 1) // d[0] should be "0"
+        {
+            // find maximum
+            rm = (rm * 10 + d[i]) % 3;
+        }
+        if (rm == 0)
+        {
+            rep3(i, n - 1, 0)
+            {
+                cout << d[i];
+            }
+            return 0;
+        }
+    }
+    cout << -1 << endl;
+    return 0;
 }
