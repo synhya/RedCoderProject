@@ -51,6 +51,6 @@ int main()
     {
         std::cout << elm << " ";
     }
-    cout << endl;
+    cout << uset[0] << endl;
     return 0;
 }

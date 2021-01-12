@@ -303,5 +303,6 @@ int main()
 {
     TEST
     {
-        }
+        cout << (5LL << 4) << endl; // 2의 4승 * 5
+    }
 }

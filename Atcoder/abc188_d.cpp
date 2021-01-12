@@ -301,5 +301,22 @@ struct Setup_io
 
 int main()
 {
-    
+    LL(N, C); // N <= 2 * 10 ^5 >> for 문 사용 가능.
+    vpll event;
+    rep(i, N)
+    {
+        LL(a, b, c);
+        event.eb(a - 1, c);
+        event.eb(b, -c);
+    }
+    sort(all(event)); // not array so iterator
+    // for pair sort function sorts by first argument in default
+    ll ans = 0, fee = 0, t = 0;
+    for (auto [x, y] : event)
+    {
+        ans += min(C, fee) * (x - t);
+        t = x;    // think of days as width and
+        fee += y; // paying money as height..
+    }
+    cout << ans << endl;
 }
