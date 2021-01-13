@@ -45,7 +45,7 @@ template <class T>
 using pq = priority_queue<T>;
 template <class T>
 using pqg = priority_queue<T, vector<T>, greater<T>>;
-#define si(c) (int)(c).size()
+#define sz(c) (int)(c).size()
 #define INT(...)     \
     int __VA_ARGS__; \
     IN(__VA_ARGS__)
@@ -299,6 +299,8 @@ struct Setup_io
 
 //const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 //const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+
+// ***************************************************************** //
 
 int main()
 {
