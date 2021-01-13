@@ -301,7 +301,72 @@ struct Setup_io
 
 int main()
 {
-    TEST
+    // ans 1 ******************
+    /*
+    INT(n);
+    int c[10]{}, x, mn[3] = {10, 10, 10};
+    while (n--)
     {
+        x = in();
+        c[x]++;
+        mn[x % 3] = min(mn[x % 3], x);
     }
+    if (!c[0])
+    {
+        puts("-1");
+        exit(0);
+    }
+    int tar = 0; // 숫자 x 숫자의 개수
+    rep(i, 10) tar = (tar + i * c[i]) % 3;
+    if (tar)
+    {
+        if (mn[tar] < 10)
+            c[mn[tar]]--;
+        else
+        {
+            for (int i = 3 - tar, res = 2; res > 0; i += 3)
+                while (res > 0 and c[i])
+                {
+                    c[i]--;
+                    res--;
+                }
+        }
+    }
+
+    int pp = 0;
+    // 특정 숫자 조합으로 조건성립하면
+    // 숫자의 순서가 어떤순서여도 조건을 성립한다. 따라서
+    rep3(i, 9, 1) while (c[i]--)
+    {
+        cout << i;
+        pp = 1;
+    }
+    if (!pp) // 남은 c[1~9]가 한개도 없다면.. print 0
+        c[0] = 1;
+    while (c[0]--)
+        cout << 0;
+    */
+    // ans 2 **************
+    int n, x, c[10] = {};
+    cin >> n;
+    rep(i, n)
+    {
+        x = in();
+        c[x]++;
+    }
+    if (!c[0])
+        return puts("-1"), 0;
+    int all = 0;
+    rep(i, 10) all += i * c[i];
+    // 하나 없애서 되는경우
+    for (int i = 0; i < 10 && all % 3; i++)
+        if (c[i] && (all - i) % 3 == 0)
+            c[i]--, all -= i, n--;
+    // 두개 없애야 하는 경우
+    rep(i, 10) for (int j = 0; j < 10 && all % 3; j++) if (c[i] && c[j] && (i != j || c[i] > 1) && (all - i - j) % 3 == 0) c[i]--, c[j]--, all -= i + j, n -= 2;
+    if (c[0] == n)
+        return puts("0"), 0;
+    rep3(i, 9, 0) while (c[i]--) cout << i;
+    puts("");
+    return 0;
 }

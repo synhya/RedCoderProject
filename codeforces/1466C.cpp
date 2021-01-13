@@ -301,68 +301,28 @@ struct Setup_io
 
 int main()
 {
-    INT(n);
-    vi d(n);
-    rep(i, n)
+    TEST
     {
-        d[i] = in();
-    }
-    sort(all(d));
-    if (d[0] != 0)
-    {
-        cout << -1 << endl;
-        return 0;
-    }
-    if (d.size() == 1)
-    {
-        if (d[0] % 3 == 0)
+        STR(t);
+        vi a(t.length(), 0);
+        int ans = 0;
+        rep(i, t.length())
         {
-            cout << d[0] << endl;
-            return 0;
-        }
-        else
-        {
-            cout << -1 << endl;
-            return 0;
-        }
-    }
-
-    int rm = 0;
-    rep3(i, n - 1, 1) // d[0] should be "0"
-    {
-        // find maximum
-        rm = (rm * 10 + d[i]) % 3;
-    }
-    if (rm == 0)
-    {
-        rep3(i, n - 1, 0)
-        {
-            cout << d[i];
-        }
-        return 0;
-    }
-
-    int tmp;
-    rep2(s, 2, n - 1) rep3(t, s, 1)
-    {
-        tmp = d[t];
-        d[t] = d[t + 1];
-        d[t + 1] = tmp;
-        rm = 0;
-        rep3(i, n - 1, 1) // d[0] should be "0"
-        {
-            // find maximum
-            rm = (rm * 10 + d[i]) % 3;
-        }
-        if (rm == 0)
-        {
-            rep3(i, n - 1, 0)
+            if (i == t.length() - 1)
+                continue;
+            if (t[i] == t[i + 1] && a[i] == 0 && a[i + 1] == 0)
             {
-                cout << d[i];
+                a[i + 1]++;
+                ans++;
             }
-            return 0;
+            if (i == 0)
+                continue;
+            if (t[i - 1] == t[i + 1] && a[i - 1] == 0 && a[i + 1] == 0)
+            {
+                a[i + 1]++;
+                ans++;
+            }
         }
+        cout << ans << endl;
     }
-    cout << -1 << endl;
-    return 0;
 }

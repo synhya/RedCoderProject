@@ -303,5 +303,38 @@ int main()
 {
     TEST
     {
+        // first answer
+        /*
+        INT(n);
+
+        int ans = 0;
+        int prv = 0, ok = 0;
+
+        rep2(i, 1, n)
+        {
+            INT(a);
+            ans += (a != prv);
+            ok |= (a == prv); // ok = ok|| (a==prv);
+
+            if (prv + 1 < a)
+                ans += ok, ok = 0;
+            prv = a;
+        }
+
+        ans += ok; // for last input.
+        cout << ans << endl;
+        */
+        // second answer
+        INT(n);
+
+        set<int> S;
+        rep2(i, 1, n)
+        {
+            INT(a);
+            if (S.count(a))
+                a++;
+            S.insert(a);
+        }
+        cout << (int)S.size() << endl;
     }
 }

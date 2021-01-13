@@ -25,7 +25,7 @@ void add_edge(int fr, int to, int cap, int id)
 { // from, to, capacity, id
     g[fr].push_back(sz(es));
     es.emplace_back(to, cap, 0, id); // edge(to, c, f, id)
-    g[to].push_back(sz(es));         // f는 왜 쓰는거지?
+    g[to].push_back(sz(es));         // f는 왜 쓰는거지? flow network
     es.emplace_back(fr, 0, 0, id);
 }
 
