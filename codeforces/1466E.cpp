@@ -297,12 +297,50 @@ struct Setup_io
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-//const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
-//const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+//const int N = 300005;
+const int N = 500 * 1000 + 7;
+const int P = 60;
+const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+
+int n; // n < N
+ll In[N];
+int cnt[P];
+
+void solve()
+{
+    cin >> n;
+    rep(i, P) cnt[i] = 0; // 각 이진수 자리
+
+    rep2(i, 1, n)
+    {
+        cin >> In[i];
+        rep(j, P) cnt[j] += In[i] >> j & 1; // 2^j 로 나눠서 비트연산자 &
+    }                                       // 13 1101 >> 110 ,, 110 & 001 = 0;
+    // input 2 . 13 . 14  > cnt[0] = 1 cnt[1] = 1 cnt[2] = 2 cnt[3] = 2;
+    int ans = 0; //In[i] >> j & 1 .. j 자리의 숫자 참조
+    rep2(i, 1, n)
+    {
+        ll exp_or = 0, exp_and = 0;
+        rep(j, P)
+        {
+            if (In[i] >> j & 1)
+            {                                        // 13의 경우 j = 0,2,3 일때
+                exp_or += (1LL << j) % MX * n;       // 현재 13의 0번째가 1이라면 무조건 1
+                exp_and += (1LL << j) % MX * cnt[j]; // 지금 13을 13,14에서 참조할것이므로
+            }
+            else // 13의경우 j = 1 일때
+                exp_or += (1LL << j) % MX * cnt[j];
+        }
+        exp_and %= MX, exp_or %= MX;
+        ans = (ans + 1LL * exp_or * exp_and) % MX;
+    }
+    cout << ans << endl;
+}
 
 int main()
 {
     TEST
     {
+        solve();
     }
 }
