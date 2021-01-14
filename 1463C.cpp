@@ -302,10 +302,21 @@ struct Setup_io
 //const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
 // ***************************************************************** //
-
+// busy robot.
 int main()
 {
     TEST
     {
+        INT(n);
+        vi t(n), x(n);
+        rep(i, n) { cin >> t[i] >> x[i]; }
+        int cw = 0, ct = 0;
+        rep(i, n)
+        {
+            if ((cw != 0) && (x[i] == ct)) // CW비어있고 지금이 실행시간이면 실행
+                cw = x[i];
+        }
     }
 }
+// 3
+1 5 3 0 6 4

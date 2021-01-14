@@ -307,5 +307,31 @@ int main()
 {
     TEST
     {
+        INT(n);
+        VEC(ll, a, n);
+        ll odd = 0, even = 0;
+        rep(i, n)
+        {
+            if (i & 1)
+            {
+                odd += a[i];
+            }
+            else
+            {
+                even += a[i];
+            }
+        }
+        if (odd > even)
+        {
+            rep(i, n) if (!(i & 1)) a[i] = 1;
+        }
+
+        else
+        {
+            rep(i, n) if ((i & 1)) a[i] = 1;
+        }
+
+        rep(i, n) cout << a[i] << " ";
+        cout << endl;
     }
 }
