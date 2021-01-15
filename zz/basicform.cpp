@@ -9,14 +9,14 @@
 #define rep2(i, a, b) for (ll i = a; i <= b; ++i)
 #define rep(i, n) for (ll i = 0; i < n; ++i)
 #define rep3(i, a, b) for (ll i = a; i >= b; --i)
-#define pii pair<int, int>
-#define pll pair<ll, ll>
+#define pi pair<int, int>
+#define pl pair<ll, ll>
 #define pb push_back
 #define eb emplace_back
 #define vi vector<int>
-#define vll vector<ll>
+#define vl vector<ll>
 #define vpi vector<pii>
-#define vpll vector<pll>
+#define vpl vector<pll>
 #define overload2(_1, _2, name, ...) name
 #define vec(type, name, ...) vector<type> name(__VA_ARGS__)
 #define VEC(type, name, size) \
@@ -62,8 +62,7 @@ using pqg = priority_queue<T, vector<T>, greater<T>>;
 #define DBL(...)        \
     double __VA_ARGS__; \
     IN(__VA_ARGS__)
-int scan()
-{
+int scan() {
     return getchar();
 }
 void scan(int &a) { cin >> a; }
@@ -76,8 +75,7 @@ void scan(pair<T, S> &p) { scan(p.first), scan(p.second); }
 template <class T>
 void scan(vector<T> &);
 template <class T>
-void scan(vector<T> &a)
-{
+void scan(vector<T> &a) {
     for (auto &i : a)
         scan(i);
 }
@@ -85,8 +83,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &... tail)
-{
+void IN(Head &head, Tail &... tail) {
     scan(head);
     IN(tail...);
 }
@@ -94,15 +91,13 @@ template <class T, class S>
 inline bool chmax(T &a, const S &b) { return (a < b ? a = b, 1 : 0); }
 template <class T, class S>
 inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
-vi iota(int n)
-{
+vi iota(int n) {
     vi a(n);
     iota(all(a), 0);
     return a;
 }
 template <typename T>
-vi iota(vector<T> &a, bool greater = false)
-{
+vi iota(vector<T> &a, bool greater = false) {
     vi res(a.size());
     iota(all(res), 0);
     sort(all(res), [&](int i, int j) {
@@ -114,20 +109,17 @@ vi iota(vector<T> &a, bool greater = false)
 }
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 template <class T>
-T POW(T x, int n)
-{
+T POW(T x, int n) {
     T res = 1;
     for (; n; n >>= 1, x *= x)
         if (n & 1)
             res *= x;
     return res;
 }
-vector<pll> factor(ll x)
-{
-    vector<pll> ans;
+vector<pl> factor(ll x) {
+    vector<pl> ans;
     for (ll i = 2; i * i <= x; i++)
-        if (x % i == 0)
-        {
+        if (x % i == 0) {
             ans.push_back({i, 1});
             while ((x /= i) % i == 0)
                 ans.back().second++;
@@ -137,12 +129,10 @@ vector<pll> factor(ll x)
     return ans;
 }
 template <class T>
-vector<T> divisor(T x)
-{
+vector<T> divisor(T x) {
     vector<T> ans;
     for (T i = 1; i * i <= x; i++)
-        if (x % i == 0)
-        {
+        if (x % i == 0) {
             ans.pb(i);
             if (i * i != x)
                 ans.pb(x / i);
@@ -150,40 +140,34 @@ vector<T> divisor(T x)
     return ans;
 }
 template <typename T>
-void zip(vector<T> &x)
-{
+void zip(vector<T> &x) {
     vector<T> y = x;
     sort(all(y));
-    for (int i = 0; i < x.size(); ++i)
-    {
+    for (int i = 0; i < x.size(); ++i) {
         x[i] = lb(y, x[i]);
     }
 }
 int popcount(ll x) { return __builtin_popcountll(x); }
-int in()
-{
+int in() {
     int x;
     cin >> x;
     return x;
 }
-ll lin()
-{
+ll lin() {
     unsigned long long x;
     cin >> x;
     return x;
 }
 
 template <typename T>
-struct edge
-{
+struct edge {
     int from, to;
     T cost;
     int id;
     edge(int to, T cost) : from(-1), to(to), cost(cost) {}
     edge(int from, int to, T cost) : from(from), to(to), cost(cost) {}
     edge(int from, int to, T cost, int id) : from(from), to(to), cost(cost), id(id) {}
-    edge &operator=(const int &x)
-    {
+    edge &operator=(const int &x) {
         to = x;
         return *this;
     }
@@ -196,13 +180,11 @@ using Tree = vector<vector<int>>;
 using Graph = vector<vector<int>>;
 template <class T>
 using Wgraph = vector<vector<edge<T>>>;
-Graph getG(int n, int m = -1, bool directed = false, int margin = 1)
-{
+Graph getG(int n, int m = -1, bool directed = false, int margin = 1) {
     Tree res(n);
     if (m == -1)
         m = n - 1;
-    while (m--)
-    {
+    while (m--) {
         int a, b;
         cin >> a >> b;
         a -= margin, b -= margin;
@@ -213,13 +195,11 @@ Graph getG(int n, int m = -1, bool directed = false, int margin = 1)
     return move(res);
 }
 template <class T>
-Wgraph<T> getWg(int n, int m = -1, bool directed = false, int margin = 1)
-{
+Wgraph<T> getWg(int n, int m = -1, bool directed = false, int margin = 1) {
     Wgraph<T> res(n);
     if (m == -1)
         m = n - 1;
-    while (m--)
-    {
+    while (m--) {
         int a, b;
         T c;
         cin >> a >> b >> c;
@@ -237,10 +217,8 @@ Wgraph<T> getWg(int n, int m = -1, bool directed = false, int margin = 1)
     INT(testcases); \
     while (testcases--)
 template <class T>
-ostream &operator<<(ostream &os, const vector<T> &v)
-{
-    for (auto it = begin(v); it != end(v); ++it)
-    {
+ostream &operator<<(ostream &os, const vector<T> &v) {
+    for (auto it = begin(v); it != end(v); ++it) {
         if (it == begin(v))
             os << *it;
         else
@@ -249,16 +227,14 @@ ostream &operator<<(ostream &os, const vector<T> &v)
     return os;
 }
 template <class T, class S>
-ostream &operator<<(ostream &os, const pair<T, S> &p)
-{
+ostream &operator<<(ostream &os, const pair<T, S> &p) {
     os << p.first << " " << p.second;
     return os;
 }
 template <class S, class T>
 string to_string(pair<S, T> p) { return "(" + to_string(p.first) + "," + to_string(p.second) + ")"; }
 template <class A>
-string to_string(A v)
-{
+string to_string(A v) {
     if (v.empty())
         return "{}";
     string ret = "{";
@@ -270,8 +246,7 @@ string to_string(A v)
 
 void dump() { cerr << endl; }
 template <class Head, class... Tail>
-void dump(Head head, Tail... tail)
-{
+void dump(Head head, Tail... tail) {
     cerr << to_string(head) << " ";
     dump(tail...);
 }
@@ -287,10 +262,8 @@ void dump(Head head, Tail... tail)
 
 template <typename T>
 static constexpr T inf = numeric_limits<T>::max() / 2;
-struct Setup_io
-{
-    Setup_io()
-    {
+struct Setup_io {
+    Setup_io() {
         ios_base::sync_with_stdio(0), cin.tie(0), cout.tie(0);
         cout << fixed << setprecision(15);
     }
@@ -302,10 +275,14 @@ struct Setup_io
 //const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
 // ***************************************************************** //
+void solve() {
+    //
+}
 
-int main()
-{
-    TEST
-    {
+
+
+int main() {
+    TEST {
+        solve();
     }
 }
