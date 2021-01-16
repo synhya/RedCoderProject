@@ -36,4 +36,21 @@ int main() {
     bool operator<(const edge &a, const edge &b) {
         return a.w < b.w;
     } // 연산자 오버로딩.
+
+    priority_queue<pair<int, int>> h;
+    h.emplace(0, 0);
+    h.push(pair<int, int>(0, 0));
+    // pair같은경우 emplace가 더 깔끔하다.
+    // vector > emplace_back, deque > emplace_front
+
+    for (int i = 0; i < 10; i++) {
+        cout << i << " \n"[i == n - 1];
+    } // 마지막에서만 newline 그때까진 space 우아한표현
+
+    int u = x / 4;     // bit operation
+    int p = x / 2 % 2; // p and q for min and max respectively
+    int q = x % 2;
+    // 비트연산자를 이용해 if x = 1101(2)
+    // > u = 11(2)  p = 0(2)   q = 1(2) ; from 1473E
+    x = u * 4 + p * 2 + q;
 }

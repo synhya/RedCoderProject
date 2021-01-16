@@ -29,26 +29,21 @@
 using namespace std;
 
 // syntax : unordered_set<T> type
-int main()
-{
+int main() {
     std::unordered_set<int> uset = {4, 2, 31, 23, 4, 2, 2, 1};
 
     auto search = uset.find(2);
     //search is iterator auto automatically finds type when initialized
 
-    if (search != uset.end())
-    {
+    if (search != uset.end()) {
         // .end() is literally length so last element+1
         // as begin() it is used as iterator
         std::cout << "Found" << (*search) << '\n';
         // what search points (*search)
-    }
-    else
-    {
+    } else {
         std::cout << "Not Found\n";
     }
-    for (auto elm : uset)
-    {
+    for (auto elm : uset) {
         std::cout << elm << " ";
     }
     cout << uset[0] << endl;

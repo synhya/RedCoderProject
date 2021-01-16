@@ -8,7 +8,7 @@
 // from ascending order of distance we choose where to visit next
 // for example
 //      - idx distance pairs in PQ * in starting node 0
-//          0, 0 // initial node and its dist
+//          0, 0 // initial node and its dist  // pq.push({s, 0});
 //          1, 4 // weight of edge (0,1) is 4 (i.e. distance is 4)
 //          2, 1 // weight of edge (0,2) is 1
 // .> pull out the node that visits every edges of it ( delete 0,0 from PQ )
@@ -32,6 +32,40 @@
 //          1, 4  // not pulled out but node 1 already visited >> ignore
 //          3, 6
 //          3, 4
-int dijkstra(int g, int n, int s) {
-    vis =
+
+#include <bits/stdc++.h>
+constexpr int INF = 1e9 + 7;
+using namespace std;
+
+// g - adjacency list of weighted graph
+// n - number of nodes in the graph
+// s - starting node (0<= s < n)
+
+int dijkstra(edge g, int n, int s) {
+    vector<bool> vis(n, false); // visited default false
+    vector<int> dist(n, INF);
+    dist[s] = 0; // starting node
+    priority_queue<pair<int, int>> pq;
+    pq.push({s, 0});
+    while (!pq.empty()) {
+        int index = pq.top().first;
+        int minValue = -pq.top().second; // weight
+        // **** -pq.top().second. edgeWeight를 음수로 변경하면
+        // **** maxheap을 minheap으로 변경할수 있다.
+        pq.pop(); // pq.poll()
+        vis[index] = true;
+        if (dist[index] < minValue) // already found better route
+            continue;
+        for (auto edge : g[index]) {
+            if (vis[edge.to])
+                continue;
+            int newDist = dist[index] + edge.cost;
+            // {1, 4} exists and dist[2] = 1, edge(2,1).cost = 2 appears > newDist = 3;
+            if (newDist < dist[edge.to]) { // update if newDist is shorter ( 3 < 4 )
+                dist[edge.to] = newDist;
+                pq.push({edge.to, newDist});
+            }
+        }
+    }
+    return dist;
 }

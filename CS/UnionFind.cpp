@@ -39,8 +39,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-class UnionFind
-{
+class UnionFind {
     // total number of elements
     int size;
     // to track the sizes of components( number of elements in component )
@@ -50,23 +49,20 @@ class UnionFind
     // total number of components
     int numComponents;
 
-    UnionFind(int _size) : size(_size), numComponents(_size)
-    {
+    UnionFind(int _size) : size(_size), numComponents(_size) {
         if (size <= 0)
             throw invalid_argument("size should be positive");
         // this->size = numComponents = size;
         sz.resize(size);
         id.resize(size);
 
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             id[i] = i; // link to it self(selfroot) > if id[i] == i then root node
             sz[i] = 1; // it will increase by Union
         }
     };
     // Find root of component 'p'
-    int find(int p)
-    {
+    int find(int p) {
         // Find the root of the component
         int root = p;
         while (root != id[root])
@@ -85,25 +81,20 @@ class UnionFind
     }
 
     // return if elements(nodes) are on same componenet
-    bool connected(int p, int q)
-    {
+    bool connected(int p, int q) {
         return find(p) == find(q);
     }
-    int componentSize(int p)
-    {
+    int componentSize(int p) {
         return sz[find(p)];
     }
-    int size()
-    {
+    int size() {
         return size;
     }
-    int components()
-    {
+    int components() {
         return numComponents;
     }
     // Unify the components containing elements 'p' and 'q'
-    void unify(int p, int q)
-    {
+    void unify(int p, int q) {
         int root1 = find(p);
         int root2 = find(q);
 
@@ -111,20 +102,13 @@ class UnionFind
         if (root1 == root2)
             return;
 
-        if (sz[root1] < sz[root2])
-        {
+        if (sz[root1] < sz[root2]) {
             sz[root2] += sz[root1];
             id[root1] = root2;
-        }
-        else
-        {
+        } else {
             sz[root1] += sz[root2];
             id[root2] = root1;
         }
         numComponents--; // Unify > groups -1
     }
 };
-
-int main()
-{
-}

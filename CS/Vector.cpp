@@ -1,5 +1,5 @@
-#include <iostream>
 #include <array>
+#include <iostream>
 #include <vector>
 using namespace std;
 //Array
@@ -22,8 +22,7 @@ using namespace std;
 // Double sizing would go like 3 > 6 > 12 > 24..
 
 //
-int main()
-{
+int main() {
     // Declare
     std::array<int, 5> myarray;
     // Initialization

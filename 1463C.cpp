@@ -310,7 +310,7 @@ int main()
         INT(n);
         vi t(n), x(n);
         rep(i, n) { cin >> t[i] >> x[i]; }
-        int cw = 0, ct = 0;
+        int cw = 0, ct = 0, cp = 0;
         rep(i, n)
         {
             if ((cw != 0) && (x[i] == ct)) // CW비어있고 지금이 실행시간이면 실행
