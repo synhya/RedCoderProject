@@ -54,3 +54,7 @@ int main() {
     // > u = 11(2)  p = 0(2)   q = 1(2) ; from 1473E
     x = u * 4 + p * 2 + q;
 }
+struct test {
+    static constexpr int INF = 1e9 + 7;
+}; // static:객체를 생성하건 생성하지 않건, 메모리 공간에 하나만 할당이 되어서 공유되는 변수
+

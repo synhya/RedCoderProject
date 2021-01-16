@@ -14,7 +14,7 @@ int main() {
     std::cin.tie(nullptr);
     int n, m;
     cin >> n >> m;
-    vector<vector<pair<int, int>>> e(n); //edge
+    vector<vector<pair<int, int>>> e(n); //edge with endpoints and weights
     for (int i = 0; i < m; i++) {
         int u, v, w;
         cin >> u >> v >> w;

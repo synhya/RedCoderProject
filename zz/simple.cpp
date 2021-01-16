@@ -1,4 +1,7 @@
 #include <bits/stdc++.h>
+#define ll long long
+#define rep(i, n) for (ll i = 0; i < n; ++i)
+#define rep2(i, a, b) for (ll i = a; i <= b; ++i)
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
@@ -14,8 +17,6 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        cout << 12/2%2 << endl;
-
     }
     return 0;
 }

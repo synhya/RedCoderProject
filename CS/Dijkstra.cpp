@@ -52,7 +52,11 @@ int dijkstra(edge g, int n, int s) {
         int minValue = -pq.top().second; // weight
         // **** -pq.top().second. edgeWeight를 음수로 변경하면
         // **** maxheap을 minheap으로 변경할수 있다.
-        pq.pop(); // pq.poll()
+        // .> 기본적으로 c++ queue는 poll기능이 없기때문에
+        //    ascending 으로 정리되는 큐에서 최소distance부터 가져오기 위해서는
+        //  ` -pq.top() , pq.pop() 이 방식으로 최솟값 가져오고
+        //  ` pq.push ({..., -newDist}) 이 방식으로 저장하자
+        pq.pop(); // from backward ofcourse
         vis[index] = true;
         if (dist[index] < minValue) // already found better route
             continue;
@@ -63,7 +67,7 @@ int dijkstra(edge g, int n, int s) {
             // {1, 4} exists and dist[2] = 1, edge(2,1).cost = 2 appears > newDist = 3;
             if (newDist < dist[edge.to]) { // update if newDist is shorter ( 3 < 4 )
                 dist[edge.to] = newDist;
-                pq.push({edge.to, newDist});
+                pq.push({edge.to, -newDist});
             }
         }
     }
