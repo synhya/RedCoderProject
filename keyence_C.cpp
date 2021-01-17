@@ -20,14 +20,26 @@ T POW(T x, int n) {
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
-
-
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
+    int H, W, K;
+    cin >> H >> W >> K;
+    vector<vector<char>> sq(H + 1, vector<char>(W + 1));
+    vector<vector<vector<int>>> dp(H + 1, vector<vector<int>>(W + 1, vector<int>(0)));
+    rep(i, K) {
+        int h, w;
+        char x;
+        cin >> h >> w >> x;
+        sq[h][w] = x;
+    } // dp[h][w][k]
+
+    
+    int ans = 0;
+    rep(i, dp[H][W].k.size()) {
+        ans += dp[H][W].d
     }
-    return 0;
+}
+
+return 0;
 }
