@@ -5,10 +5,6 @@ using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 using namespace std;
-template <class T, class S>
-inline bool chmax(T &a, const S &b) { return (a < b ? a = b, 1 : 0); }
-template <class T, class S>
-inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
@@ -16,18 +12,18 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 typedef long long int ll;
 typedef pair<int, int> pi;
 
-int dp[405][405][405];
-int a[405];
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int n;
     cin >> n;
-    rep(i,n) cin >> a[i];
-    auto dfs = [&](auto &&f, int l, int r, int x) -> ll {
-        if(l == 0 and r == n ) return 0;
-        auto &res = dp[l][r][x];
-        if(res != -1) return res;
+    int k = (1 << n) - 1;
+    cout << k << "\n";
+    rep2(i,1,k) {
+        string s(1 << n,' ');
+        rep(j,k+1){
+            s[j] = "AB"[__builtin_popcount(j & i) % 2];
+        }
+        cout << s << '\n';
     }
-    return 0;
 }

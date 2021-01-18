@@ -2,21 +2,20 @@
 // #pragma GCC target("avx2")
 // #pragma GCC optimize("O3")
 // #pragma GCC optimize("unroll-loops")
-#pragma GCC target "sse4.2"
 #include <bits/stdc++.h>
 #define ll long long
 #define ld long double
 #define rep2(i, a, b) for (ll i = a; i <= b; ++i)
 #define rep(i, n) for (ll i = 0; i < n; ++i)
 #define rep3(i, a, b) for (ll i = a; i >= b; --i)
-#define pi pair<int, int>
-#define pl pair<ll, ll>
+#define pii pair<int, int>
+#define pll pair<ll, ll>
 #define pb push_back
 #define eb emplace_back
 #define vi vector<int>
-#define vl vector<ll>
+#define vll vector<ll>
 #define vpi vector<pii>
-#define vpl vector<pll>
+#define vpll vector<pll>
 #define overload2(_1, _2, name, ...) name
 #define vec(type, name, ...) vector<type> name(__VA_ARGS__)
 #define VEC(type, name, size) \
@@ -29,13 +28,16 @@
 #define vvv(type, name, h, w, ...) vector<vector<vector<type>>> name(h, vector<vector<type>>(w, vector<type>(__VA_ARGS__)))
 #define vvvv(type, name, a, b, c, ...) \
     vector<vector<vector<vector<type>>>> name(a, vector<vector<vector<type>>>(b, vector<vector<type>>(c, vector<type>(__VA_ARGS__))))
+#define mt make_tuple
+
 #define fi first
 #define se second
 #define all(c) begin(c), end(c)
-#define rall(c) rbegin(c), rend(c)
 #define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
 using namespace std;
+constexpr pii dx4[4] = {pii{1, 0}, pii{0, 1}, pii{-1, 0}, pii{0, -1}};
+constexpr pii dx8[8] = {{1, 0}, {1, 1}, {0, 1}, {-1, 1}, {-1, 0}, {-1, -1}, {0, -1}, {1, -1}};
 const string YESNO[2] = {"NO", "YES"};
 const string YesNo[2] = {"No", "Yes"};
 const string yesno[2] = {"no", "yes"};
@@ -43,10 +45,18 @@ void YES(bool t = 1) { cout << YESNO[t] << endl; }
 void Yes(bool t = 1) { cout << YesNo[t] << endl; }
 void yes(bool t = 1) { cout << yesno[t] << endl; }
 template <class T>
+using vc = vector<T>;
+template <class T>
+using vvc = vector<vc<T>>;
+template <class T>
+using vvvc = vector<vvc<T>>;
+template <class T>
+using vvvvc = vector<vvvc<T>>;
+template <class T>
 using pq = priority_queue<T>;
 template <class T>
 using pqg = priority_queue<T, vector<T>, greater<T>>;
-#define sz(c) (int)(c).size()
+#define si(c) (int)(c).size()
 #define INT(...)     \
     int __VA_ARGS__; \
     IN(__VA_ARGS__)
@@ -62,9 +72,7 @@ using pqg = priority_queue<T, vector<T>, greater<T>>;
 #define DBL(...)        \
     double __VA_ARGS__; \
     IN(__VA_ARGS__)
-int scan() {
-    return getchar();
-}
+int scan() { return getchar(); }
 void scan(int &a) { cin >> a; }
 void scan(long long &a) { cin >> a; }
 void scan(char &a) { cin >> a; }
@@ -83,7 +91,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &... tail) {
+void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
@@ -116,8 +124,8 @@ T POW(T x, int n) {
             res *= x;
     return res;
 }
-vector<pl> factor(ll x) {
-    vector<pl> ans;
+vector<pll> factor(ll x) {
+    vector<pll> ans;
     for (ll i = 2; i * i <= x; i++)
         if (x % i == 0) {
             ans.push_back({i, 1});
@@ -147,7 +155,15 @@ void zip(vector<T> &x) {
         x[i] = lb(y, x[i]);
     }
 }
-int popcount(ll x) { return __builtin_popcountll(x); }
+int topbit(signed t) { return t == 0 ? -1 : 31 - __builtin_clz(t); }
+int topbit(ll t) { return t == 0 ? -1 : 63 - __builtin_clzll(t); }
+int lowbit(signed a) { return a == 0 ? 32 : __builtin_ctz(a); }
+int lowbit(ll a) { return a == 0 ? 64 : __builtin_ctzll(a); }
+int allbit(int n) { return (1 << n) - 1; }
+int popcount(signed t) { return __builtin_popcount(t); }
+int popcount(ll t) { return __builtin_popcountll(t); }
+bool ispow2(int i) { return i && (i & -i) == i; }
+
 int in() {
     int x;
     cin >> x;
@@ -158,6 +174,13 @@ ll lin() {
     cin >> x;
     return x;
 }
+
+template <class T>
+pair<T, T> operator-(const pair<T, T> &x, const pair<T, T> &y) { return pair<T, T>(x.fi - y.fi, x.se - y.se); }
+template <class T>
+pair<T, T> operator+(const pair<T, T> &x, const pair<T, T> &y) { return pair<T, T>(x.fi + y.fi, x.se + y.se); }
+template <class T>
+ll operator*(const pair<T, T> &x, const pair<T, T> &y) { return (ll)x.fi * y.fi + (ll)x.se * y.se; }
 
 template <typename T>
 struct edge {
@@ -271,18 +294,5 @@ struct Setup_io {
 #define drop(s) cout << #s << endl, exit(0)
 #pragma endregion
 
-//const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
-//const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
-
-// ***************************************************************** //
-void solve() {
-    //
-}
-
-
-
 int main() {
-    TEST {
-        solve();
-    }
 }
