@@ -295,4 +295,28 @@ struct Setup_io {
 #pragma endregion
 
 int main() {
+    TEST{
+        string s;
+        cin >> s;
+        int cnt = 0;
+        rep(i, s.length()) {
+            if (s[i] == '(') {
+                cnt++;
+            }
+            if (s[i] == ')') {
+                cnt--;
+            }
+            if (s[i] == '?') {
+                if (cnt >= 1)
+                    cnt--;
+                if (cnt == 0)
+                    cnt++;
+            }
+
+            if (cnt < 0) {
+                break;
+            }
+        }
+        cout << (cnt != 0 ? "NO" : "YES") << endl;
+    }
 }

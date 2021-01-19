@@ -26,15 +26,19 @@ int solve(int start, int end, int ant) { //ant starts at 0
     if (ans >= 0) //already done operation (dp)
         return ans;
 
+    // similar to dfs (tree version)
+
     int snuke = end - start - ant;
+    // in snuke's turn he can choose from both. for (ant) coins
     if (snuke <= ant) {
         if (start > 0)
             ans = max(ans, a[start - 1] + solve(start - 1, end, ant));
         if (end < n)
             ans = max(ans, a[end] + solve(start, end + 1, ant));
-    } // solve 0 0 0 >> snuke == ant , o < n
-      // >> solve 0 1 0 >> snuke > ant
-    if (end == n || start > 0 && a[start] > a[end])
+    }
+
+    // even if he takes all (ant)coins he have. keeping coin is possible.
+    if (end == n || start > 0 && a[start] > a[end]) // a[start] > a[end] greedy ant.
         ans = max(ans, solve(start - 1, end, ant + 1));
     else
         ans = max(ans, solve(start, end + 1, ant + 1));

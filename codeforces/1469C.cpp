@@ -52,6 +52,51 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n, k);
+        int l = 0, r = 0;
+        bool ok = true;
+        rep(i, n) {
+            INT(h);
+            if (i == 0) {
+                l = r = h;
+            } else {
+                l = max(l - k + 1, h);
+                r = min(r + k - 1, h + k - 1);
+            }
+            if (l > r) {
+                ok = false;
+            }
+            if (i == n - 1 && l != h) {
+                ok = false;
+            }
+        }
+        if (ok) {
+            cout << "YES\n";
+        } else {
+            cout << "NO\n";
+        }
     }
     return 0;
 }
+/* my answer
+        INT(n, k);
+        VEC(ll, h, n);
+        vector<pair<ll, ll>> dp(n);
+        string ans = "YES";
+        dp[0].first = h[0], dp[0].second = h[0] + k;
+        rep(i, n - 1) {
+            if (h[i] <= h[i + 1] && dp[i].second > h[i + 1]) {
+                dp[i + 1].first = h[i + 1];
+                dp[i + 1].second = min(h[i + 1] + 2 * k - 1, dp[i].second - 1 + k);
+            } else if (h[i] > h[i + 1] && dp[i].first < h[i + 1] + 2 * k - 1) {
+                dp[i + 1].second = h[i + 1] + 2 * k - 1;
+                dp[i + 1].first = max(h[i + 1], dp[i].first + 1 - k);
+            } else {
+                ans = "NO";
+                break;
+            }
+        }
+        if (dp[n - 1].first > h[n - 1])
+            ans = "NO";
+        cout << ans << '\n';
+*/

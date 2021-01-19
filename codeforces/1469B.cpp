@@ -52,6 +52,37 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n);
+        VEC(int, a, n);
+        INT(m);
+        VEC(int, b, m);
+        partial_sum(all(a), a.begin()); //partial_sum.
+        partial_sum(all(b), b.begin());
+        cout << max(0, *max_element(all(a))) + max(0, *max_element(all(b))) << '\n';
     }
     return 0;
 }
+/* partial_sum(InputIt first, InputIt last, OutputIt d_first);
+    *(d_first)   = *first;
+    *(d_first+1) = *first + *(first+1);
+    *(d_first+2) = *first + *(first+1) + *(first+2);
+    *(d_first+3) = *first + *(first+1) + *(first+2) + *(first+3);
+*/
+/* my answer
+        INT(n);
+        VEC(int, a, n);
+        INT(m);
+        VEC(int, b, m);
+        vi A(n + 1), B(m + 1);
+        A[0] = 0, B[0] = 0;
+        rep2(i, 1, n) {
+            A[i] = A[i - 1] + a[i - 1];
+        }
+        rep2(i, 1, m) {
+            B[i] = B[i - 1] + b[i - 1];
+        }
+        int am = 0, bm = 0;
+        rep(i, n + 1) am = max(am, A[i]);
+        rep(i, m + 1) bm = max(bm, B[i]);
+        cout << am + bm << "\n";
+*/
