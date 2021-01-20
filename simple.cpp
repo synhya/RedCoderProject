@@ -32,7 +32,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &...tail) {
+void IN(Head &head, Tail &... tail) {
     scan(head);
     IN(tail...);
 }
@@ -52,6 +52,55 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n);
+        VEC(int, a, n);
+        ll sum = 0;
+        int cnt = 0;
+        rep(i, n) {
+            if (i % 2 == 0) {
+                sum += a[i];
+            } else {
+                sum -= a[i];
+            }
+        }
+        if (!sum) {
+            cout << "YES\n";
+            goto end;
+        } else {
+            rep(i, n) {
+                rep(j, n) {
+                    if (i % 2 == 0 && j % 2 == 1) {
+                        if (sum - 2 * a[i] + 2 * a[j] == 0) {
+                            cnt = 0;
+                            int S = 0;
+                            vi A = a;
+                            swap(A[i], A[j]);
+                            rep(k, n) {
+                                if (k % 2 == 0) {
+                                    S += A[k];
+                                } else {
+                                    S -= A[k];
+                                }
+                                if (k % 2 == 0 && S < 0) {
+                                    cnt++;
+                                    break;
+                                }
+                                if (k % 2 == 1 && S > 0) {
+                                    cnt++;
+                                    break;
+                                }
+                            }
+                            if (!cnt) {
+                                cout << "YES\n";
+                                goto end;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        cout << "NO\n";
+    end:;
     }
     return 0;
 }
