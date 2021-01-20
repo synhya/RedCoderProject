@@ -52,6 +52,17 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        string s;
+        cin >> s;
+        vector<pi> pos(s.length() + 1);
+        pos[0].first = 0, pos[0].second = 0;
+        rep(i, s.length()) {
+            if (s[i] == 'L')
+
+                if (s[i] == 'R')
+                    if (s[i] == 'U')
+                        if (s[i] == 'D')
         }
+    }
     return 0;
 }

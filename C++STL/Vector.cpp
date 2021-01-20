@@ -35,4 +35,8 @@ int main() {
     cout << Vec.back() << endl;
     cout << VecCopy.back() << endl;
     // vector is also Assigned by value
+    vector<int> test;
+    test.reserve(10);   // 10capacity.
+    test.resize(10);    // 10capacity + empty size 10;
+    test.resize(10, 0); // 10 size of 0
 }

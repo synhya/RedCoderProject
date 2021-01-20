@@ -7,6 +7,14 @@ int x = 1LL << 5; // 2^5 곱하기. 즉 비트 왼쪽으로 5칸.
 
 ll test[10][10]; // 메인함수 바깥에서 생성하면 0으로 자동 초기화
 
+class Human {
+public:
+    int age;
+    string name; //rhs = right hand side. and lhs.
+    bool operator<(const Human &rhs) const { return age < rhs.age; }
+    bool operator>(const Human &rhs) const { return age > rhs.age; }
+}; // bool 연산자 정의시 const 두번 꼭 쓰자..
+
 int main() {
     //
     int cnt = x >> 3 & 1; // 3+1번쨰 자리 1,0 가져오기. (3칸 오른쪽이동하니까)
@@ -58,6 +66,15 @@ int main() {
 
     //j 와 i의 and값에 들어있는 1의 갯수를 반환한다.
     s[j] = "AB"[__builtin_popcount(j & i) % 2];
+
+    cout << ('5' - '0') << endl; // 계산 가능하다.. 5반환.
+    cout << ('0' - '0') << endl; // char끼리 계산해서 int반환해준다.
+    string t += '0' + 1;         // 이런식으로 char로 변환도 가능하다.
+
+    vector<int> used((1 << 5));     // 100000
+    used[((1 << 5) - 1) ^ cur] = 1; // 11111 (letters of 5) ^ cur
+
+    int lg = __lg(n) + 1; // 로그함수.
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
