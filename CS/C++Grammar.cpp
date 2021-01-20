@@ -75,6 +75,11 @@ int main() {
     used[((1 << 5) - 1) ^ cur] = 1; // 11111 (letters of 5) ^ cur
 
     int lg = __lg(n) + 1; // 로그함수.
+
+    for (int i = 10; i--;) {
+        cout << i << " ";
+    } // 가운데 넣으면 계산하고시작하겠지.
+      // > 9 8 7 6 5 4 3 2 1 0
 }
 struct test {
     static constexpr int INF = 1e9 + 7;

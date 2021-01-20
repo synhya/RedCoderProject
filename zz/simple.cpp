@@ -1,12 +1,21 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define all(c) c.begin(), c.end()
 #define rep(i, n) for (ll i = 0; i < n; ++i)
 #define rep2(i, a, b) for (ll i = a; i <= b; ++i)
+#define rep3(i, a, b) for (ll i = a; i >= b; --i)
+#define endl '\n'
+const string YESNO[2] = {"NO", "YES"};
+const string YesNo[2] = {"No", "Yes"};
+const string yesno[2] = {"no", "yes"};
+void YES(bool t = 1) { cout << YESNO[t] << endl; }
+void Yes(bool t = 1) { cout << YesNo[t] << endl; }
+void yes(bool t = 1) { cout << yesno[t] << endl; }
+
 template <class T, class S>
 inline bool chmax(T &a, const S &b) { return (a < b ? a = b, 1 : 0); }
 template <class T, class S>
 inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
-using namespace std;
 #define INT(...)     \
     int __VA_ARGS__; \
     IN(__VA_ARGS__)
@@ -52,6 +61,6 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        }
+    }
     return 0;
 }

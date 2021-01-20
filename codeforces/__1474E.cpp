@@ -1,4 +1,5 @@
 #include <bits/stdc++.h>
+using namespace std;
 #define all(c) c.begin(), c.end()
 #define rep(i, n) for (ll i = 0; i < n; ++i)
 #define rep2(i, a, b) for (ll i = a; i <= b; ++i)
@@ -6,7 +7,6 @@ template <class T, class S>
 inline bool chmax(T &a, const S &b) { return (a < b ? a = b, 1 : 0); }
 template <class T, class S>
 inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
-using namespace std;
 #define INT(...)     \
     int __VA_ARGS__; \
     IN(__VA_ARGS__)
@@ -32,7 +32,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &... tail) {
+void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
@@ -53,54 +53,45 @@ int main() {
     std::cin >> t;
     while (t--) {
         INT(n);
-        VEC(int, a, n);
-        ll sum = 0;
-        int cnt = 0;
-        rep(i, n) {
-            if (i % 2 == 0) {
-                sum += a[i];
-            } else {
-                sum -= a[i];
+        ll ans = 0;
+        ll cnt = 1, st = n - 1, asz = 0;
+        while (asz < n - 1) {
+            if (cnt == 0) {
+                cnt = 2;
+                st--;
             }
+            ans += st * st;
+            cnt--;
+            asz++;
         }
-        if (!sum) {
-            cout << "YES\n";
-            goto end;
-        } else {
-            rep(i, n) {
-                rep(j, n) {
-                    if (i % 2 == 0 && j % 2 == 1) {
-                        if (sum - 2 * a[i] + 2 * a[j] == 0) {
-                            cnt = 0;
-                            int S = 0;
-                            vi A = a;
-                            swap(A[i], A[j]);
-                            rep(k, n) {
-                                if (k % 2 == 0) {
-                                    S += A[k];
-                                } else {
-                                    S -= A[k];
-                                }
-                                if (k % 2 == 0 && S < 0) {
-                                    cnt++;
-                                    break;
-                                }
-                                if (k % 2 == 1 && S > 0) {
-                                    cnt++;
-                                    break;
-                                }
-                            }
-                            if (!cnt) {
-                                cout << "YES\n";
-                                goto end;
-                            }
-                        }
-                    }
-                }
-            }
+        cout << ans << '\n';
+        vi p;
+        vi opi, opj;
+        p.push_back(n / 2 + 1);
+        for (int i = 1; i < n / 2; i++) {
+            p.push_back(i);
         }
-        cout << "NO\n";
-    end:;
+        for (int i = n / 2 + 2; i <= n; i++) {
+            p.push_back(i);
+        }
+        p.push_back(n / 2);
+        // 12345 의 경우 4 > 1 2 > 5 > 3
+        for (int i = n / 2 + 1; i < n; i++) {
+            opi.push_back(i);
+            opj.push_back(1);
+        } // 4,1
+        for (int i = n / 2; i >= 1; i--) {
+            opi.push_back(i);
+            opj.push_back(n);
+        } // 3,5 2,5 1,5
+
+        for (int i = 0; i < p.size(); i++) {
+            cout << p[i] << " \n"[i ==p.size()-1];
+        }
+        cout << opi.size() << '\n';
+        for(int j = 0; j < opi.size(); j++) {
+            cout << opi[j] << " " << opj[j] << "\n";
+        } 
     }
     return 0;
 }
