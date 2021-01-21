@@ -55,6 +55,22 @@ typedef vector<int> vi;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+const int N = 200 * 1000 + 5;
+const int MX = 1e9 + 7;
+ll a[N];
+void solve() {
+    INT(n, m, k);
+    rep(i, n) {
+        cin >> a[i];
+    }
+    ll ans = 0;
+    rep2(i, 1, n) {
+        int tmp = 1;
+        rep(j, m) {
+            tmp *= a[i + j];
+        }
+    }
+}
 
 int main() {
     std::ios::sync_with_stdio(false);
@@ -62,6 +78,7 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        solve();
     }
     return 0;
 }

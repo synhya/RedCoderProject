@@ -45,16 +45,62 @@ void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
+// constexpr int inf = 1e9;
+// constexpr i64 inf = 1e18;
+// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
+// const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
-// constexpr i64 inf = 1e18;
-// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
-// const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+
+const int N = 200 * 1000 + 5;
+ll a[N];
+void solve() {
+    INT(n);
+    //vector<ll> a(n + 1);
+    rep(i, n) {
+        int x;
+        cin >> x;
+        a[x]++;
+    } // x < n !!
+    ll ans = 0;
+    /*
+    rep2(i, 2, n - 1) {
+        ans += a[i - 1] * a[i] * a[i + 1];
+    }
+    rep2(i, 1, n - 1) {
+        ans += a[i] * (a[i] - 1) / 2 * a[i + 1];
+    }
+    rep2(i, 2, n) {
+        ans += a[i] * (a[i] - 1) / 2 * a[i - 1];
+    }
+    rep2(i, 2, n - 1) {
+        ans += a[i - 1] * (a[i - 1] - 1) / 2 * a[i + 1];
+    }
+    rep2(i, 2, n - 1) {
+        ans += a[i + 1] * (a[i + 1] - 1) / 2 * a[i - 1];
+    }
+    rep2(i, 1, n) {
+        ans += a[i] * (a[i] - 1) * (a[i] - 2) / 6;
+    }
+    */
+    rep2(i, 1, n) {
+        ans += a[i - 1] * a[i] * a[i + 1];
+        ans += a[i] * (a[i] - 1) / 2 * a[i + 1];
+        ans += a[i] * (a[i] - 1) / 2 * a[i - 1];
+        ans += a[i - 1] * (a[i - 1] - 1) / 2 * a[i + 1];
+        ans += a[i + 1] * (a[i + 1] - 1) / 2 * a[i - 1];
+        ans += a[i] * (a[i] - 1) * (a[i] - 2) / 6;
+    }
+    
+    cout << ans << '\n';
+    rep(i, n + 3) {
+        a[i] = 0;
+    }
+}
 
 int main() {
     std::ios::sync_with_stdio(false);
@@ -62,6 +108,7 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        solve();
     }
     return 0;
 }

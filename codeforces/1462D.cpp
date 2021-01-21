@@ -45,23 +45,49 @@ void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
+// constexpr int inf = 1e9;
+// constexpr i64 inf = 1e18;
+// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
+// const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
-// constexpr i64 inf = 1e18;
-// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
-// const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
-
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n);
+        VEC(ll, a, n);
+        ll sum = 0;
+        for (ll &x : a)
+            sum += x;
+        rep3(i,n,1) {
+            if( sum % i == 0) {
+                ll needSum = sum / i;
+                ll curSum = 0;
+                bool ok = true;
+                rep(j,n) {
+                    curSum += a[j];
+                    if(curSum > needSum) {
+                        ok = false;
+                        break;
+                    }
+                    else if ( curSum == needSum) {
+                        curSum = 0;
+                    }
+                }
+                if (ok) {
+                    cout << n -i << endl;
+                    goto end;
+                }
+            }
+        }
+        end:;
     }
     return 0;
 }
