@@ -66,6 +66,56 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        // best answer.
+        INT(n, m);
+        VV(char, s, n, m);
+        ll sum = 0;
+        vv(ll, ans, n, m);
+        rep3(i, n - 1, 0) rep(j, m) {
+            if (s[i][j] == '*') {
+                if (i == n - 1 or !j or j == m - 1)
+                    sum++, ans[i][j] = 1;
+                else {
+                    ans[i][j] = 1 + min({ans[i + 1][j - 1], ans[i + 1][j], ans[i + 1][j + 1]});
+                    sum += ans[i][j];
+                }
+            }
+        }
+        cout << sum << '\n';
     }
     return 0;
 }
+/* my answer (fair enough one) 
+        int ans = 0;
+        INT(n, m);
+        vector<vector<int>> mat(n, vector<int>(m, -1000));
+        rep(i, n) {
+            string tmp;
+            cin >> tmp;
+            int cnt = 0;
+            rep(j, m) {
+                if (tmp[j] == '*') {
+                    ans++;
+                    cnt++;
+                    mat[i][j] = cnt;
+                }
+            }
+        }
+        rep(i, n) {
+            rep2(j, 1, m - 2) {
+                if (mat[i][j] - mat[i][j - 1] == 1 || (mat[i][j] >0 && mat[i][j-1] < 0)) {
+                    for (int lv = 1; lv + i < n; lv++) {
+                        if (j - lv < 0 || j + lv > m - 1) {
+                            break;
+                        }
+                        if (mat[i + lv][j + lv] - mat[i + lv][j - lv] == 2 * lv) {
+                            ans++;
+                        } else {
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        cout << ans << '\n';   
+*/

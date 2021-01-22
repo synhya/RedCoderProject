@@ -36,9 +36,9 @@ int main() {
     if (ins[j] == "+") {
     } // error
     //
-    std::cout << std::fixed << std::setprecision(10) << L << "\n";
-    // setprecision(10) 소수점 10까지 ,, fixed 정수형이여도..
-    // ex) L = 14 >>> 14.0000000000
+    double x = 1;
+    cout << fixed << setprecision(6) << x;
+    // 소수점 6자리까지.. 1.000000
     //
     struct edge {
         int u, v, w;
@@ -79,7 +79,14 @@ int main() {
     for (int i = 10; i--;) {
         cout << i << " ";
     } // 가운데 넣으면 계산하고시작하겠지.
-      // > 9 8 7 6 5 4 3 2 1 0
+    // > 9 8 7 6 5 4 3 2 1 0
+
+    int r = upper_bound(v.begin(), v.end(), v[i] + k) - v.begin();
+    // trick to get the index from iterator directly.. -v.begin();
+
+    // when finding min in 3 elements or more (w/o using min_element func)
+    // need to use braces .
+    int t = min({1, 3, 4}); // min(1,3,4) will occur error
 }
 struct test {
     static constexpr int INF = 1e9 + 7;

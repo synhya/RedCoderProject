@@ -66,6 +66,29 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n, m);
+        VEC(int, a, n);
+        vi r(m);
+        int mr = 0;
+        double ans = 1;
+        rep3(i, n - 1, 0) {
+            if (a[i] != i + 1) {
+                mr = i + 1;
+                break;
+            }
+        }
+        rep(i, m) {
+            double x;
+            cin >> r[i] >> x;
+            if (r[i] >= mr) {
+                ans *= (1 - x);
+            }
+        }
+        if (mr == 0) {
+            cout << 1.000000 << '\n';
+        } else {
+            cout << fixed << setprecision(6) << 1 - ans << '\n';
+        }
     }
     return 0;
 }

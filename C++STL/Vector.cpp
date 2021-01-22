@@ -38,5 +38,9 @@ int main() {
     vector<int> test;
     test.reserve(10);   // 10capacity.
     test.resize(10);    // 10capacity + empty size 10;
-    test.resize(10, 0); // 10 size of 0
+    test.resize(10, 1); // 10 size of 1
+    // 기본적으로 벡터는 사이즈를 선언하는순간.
+    // 값을 지정하지 않으면 0 이 저장된다.
+    vector<vector<int>> test2(10, vector<int>(10));
+    cout << test2[9][9] << endl; // 0
 }

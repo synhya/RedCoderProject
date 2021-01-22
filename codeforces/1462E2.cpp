@@ -22,10 +22,6 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define VEC(type, name, size) \
     vector<type> name(size);  \
     IN(name)
-#define vv(type, name, h, ...) vector<vector<type>> name(h, vector<type>(__VA_ARGS__))
-#define VV(type, name, h, w)                       \
-    vector<vector<type>> name(h, vector<type>(w)); \
-    IN(name)
 int scan() { return getchar(); }
 void scan(int &a) { cin >> a; }
 void scan(long long &a) { cin >> a; }
@@ -59,13 +55,52 @@ typedef vector<int> vi;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+const int N = 200 * 1000 + 5;
+const int MX = 1e9 + 7;
+ll fact[N];
+ll invFact[N];
+ll power(ll a, ll b) {
+    int res = 1;
+    while (b > 0) {
+        if (b % 2 == 1)
+            res = (a * res) % MX; //! dont forget
+        a = (a * a) % MX;
+        b /= 2;
+    }
+    return res;
+}
+ll C(int n, int k) {
+    if (k > n) {
+        return 0;
+    }
+    return fact[n] * invFact[k] % MX * invFact[n - k] % MX;
+}
+
+void solve() {
+    INT(n, m, k);
+    VEC(ll, a, n);
+    sort(all(a));
+    ll ans = 0;
+    rep(i, n) {
+        int l = i + 1;
+        int r = upper_bound(a.begin(), a.end(), a[i] + k) - a.begin();
+        ans = (ans + C(r - l, m - 1)) % MX;
+    }
+    cout << ans << '\n';
+}
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
+    fact[0] = invFact[0] = 1;
+    for (int i = 1; i < N; i++) {
+        fact[i] = (fact[i - 1] * i) % MX;
+        invFact[i] = power(fact[i], MX - 2); // 분수저장법.
+    }
     while (t--) {
+        solve();
     }
     return 0;
 }

@@ -22,10 +22,6 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define VEC(type, name, size) \
     vector<type> name(size);  \
     IN(name)
-#define vv(type, name, h, ...) vector<vector<type>> name(h, vector<type>(__VA_ARGS__))
-#define VV(type, name, h, w)                       \
-    vector<vector<type>> name(h, vector<type>(w)); \
-    IN(name)
 int scan() { return getchar(); }
 void scan(int &a) { cin >> a; }
 void scan(long long &a) { cin >> a; }
@@ -59,13 +55,76 @@ typedef vector<int> vi;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+const int N = 200 * 1000 + 5;
+const int MX = 1e9 + 7;
+const int P = 1e9 + 7;
+#define MOD 998244353 // this is also prime number.
 
-int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
+int minus(int a, int b) {
+    return ((a % P) - (b % P) + P) % P;
+} // 13 - 7 = 6 > 13 % 10 - 10 % 7 = -4 >> (-4 + 10 )% 10 = 6
+
+ll power(ll a, ll b) {
+    if (b == 0)
+        return 1;
+    ll tmp = power(a, b / 2);
+    ll result = (tmp * tmp) % P;
+    if (b % 2 == 1)
+        result = (a * result) % P;
+    return result; // faster than pow in c++
+}
+ll powerforCP(ll a, ll b) {
+    ll result = 1;
+    while (b > 0) {
+        if (b % 2 == 1)
+            result = (a * result) % P;
+        a = (a * a) % P;
+        b /= 2;
     }
+    return result;
+}
+
+ll divide(ll a, ll b) {
+    return a * power(b, P - 2) % P;
+} // ** P should be prime number. to use Euler Therem.
+// >> Thus . 1e9 + 7 is a prime number!
+//  for example. 28 / 7 MOD 13
+//  28 % 13 / 7 % 13 != 28 / 7
+// WE USE INVERSE >> 28 * (1/7)
+// TO INVERSE 7 WE USE POWER FUNCTION.. (EULER THOREM)
+
+ll test() {
+    ll t = 7;                    // 28 *  7 ^ (13 - 2) % 13
+    ll x = powerforCP(t, P - 2); // 2
+    ll X = 28 * x % P;           // 2
+    cout << X << endl;           // 4 which is 28 / 7 !!!
     return 0;
 }
+
+// then.. how can i store 2/3 using mod
+// * first way
+ll divide2() {
+    ll x = 2;
+    while (x % 3 != 0) {
+        x += P;
+    }
+    x /= 3; // then (2+ x*P)/3 = iv ans iv % 3 == 0.
+    x = (x * 3LL % P);
+    cout << x << endl; // 2/3 * 3 = 2
+    return 0;
+} // so iv * 3 % P = 2 !!!
+//* second way
+ll divide3() {
+    //ll x = 2;
+    //ll X = power(3, P - 2);
+    ll X = divide(2,3);
+    cout << (X * 3LL % P) << endl;
+    return 0;
+} // this also returns 2
+
+int main() {
+    test();
+    divide2();
+    divide3();
+}
+// to sum up. power(b, P-2) == 1/b. (inverse function)

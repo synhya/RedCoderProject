@@ -41,7 +41,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &...tail) {
+void IN(Head &head, Tail &... tail) {
     scan(head);
     IN(tail...);
 }
@@ -55,30 +55,19 @@ typedef vector<int> vi;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
-const int N = 200 * 1000 + 5;
-const int MX = 1e9 + 7;
-ll a[N];
-void solve() {
-    INT(n, m, k);
-    rep(i, n) {
-        cin >> a[i];
-    }
-    ll ans = 0;
-    rep2(i, 1, n) {
-        int tmp = 1;
-        rep(j, m) {
-            tmp *= a[i + j];
-        }
-    }
-}
-
+#define l first
+#define r second
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
     while (t--) {
-        solve();
+        INT(n);
+        vector<pi> seg(n);
+        rep(i, n) {
+            cin >> seg[i].l >> seg[i].r; // 1<= l <= r <= 10^9
+        }
     }
     return 0;
 }

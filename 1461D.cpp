@@ -60,12 +60,48 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+set<ll> ans;
+int binarySum(vector<ll> a, ll l, ll r) { // l = 0, r = n-1
+    if (r >= l) {
+        ll tmp = 0;
+        rep2(i, l, r) {
+            tmp += a[i];
+        }
+        ans.insert(tmp);
+        if (l == r) {
+            return -1;
+        }
+        int m = a[l] + a[r] / 2;
+        int mid = upper_bound(all(a), m) - a.begin();
+        if (mid == a.size()) {
+            return -1;
+        }
+        binarySum(a, l, mid - 1);
+        binarySum(a, mid, r);
+    }
+    return -1;
+}
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
     while (t--) {
+        INT(n, q);
+        VEC(ll, a, n);
+        sort(all(a));
+        // max tree height = __lg(a[n-1]) + 1 (can be less)
+        // if max == mid return.
+        binarySum(a, 0, n - 1);
+        VEC(ll, s, q);
+        rep(i, q) {
+            if (ans.find(s[i]) != ans.end()) {
+                cout << "YES\n";
+            } else {
+                cout << "NO\n";
+            }
+        }
     }
     return 0;
 }
