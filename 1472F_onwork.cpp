@@ -65,12 +65,31 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+void solve() {
+    INT(n, m);
+    vector<pi> pz(n, {0, 0});
+    rep(i, m) {
+        int x, y;
+        cin >> x >> y;
+        pz[y].first = x;
+        pz[y].second = 1;
+    }
+    if (m % 2) {
+        cout << "No\n";
+        return;
+    }
+    rep(i, n) {
+        if (pz[i].second == 1)
+    }
+}
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
     while (t--) {
+        solve();
     }
     return 0;
 }

@@ -5,6 +5,8 @@ using namespace std;
 #define rep2(i, a, b) for (ll i = a; i <= b; ++i)
 #define rep3(i, a, b) for (ll i = a; i >= b; --i)
 #define endl '\n'
+#define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
+#define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
 const string YESNO[2] = {"NO", "YES"};
 const string YesNo[2] = {"No", "Yes"};
 const string yesno[2] = {"no", "yes"};
@@ -18,6 +20,9 @@ template <class T, class S>
 inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define INT(...)     \
     int __VA_ARGS__; \
+    IN(__VA_ARGS__)
+#define LL(...)     \
+    ll __VA_ARGS__; \
     IN(__VA_ARGS__)
 #define VEC(type, name, size) \
     vector<type> name(size);  \
@@ -45,7 +50,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &... tail) {
+void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
@@ -60,47 +65,40 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
-set<ll> ans;
-int binarySum(vector<ll> a, ll l, ll r) { // l = 0, r = n-1
-    if (r >= l) {
-        ll tmp = 0;
-        rep2(i, l, r) {
-            tmp += a[i];
-        }
-        ans.insert(tmp);
-        if (l == r) {
-            return -1;
-        }
-        int m = a[l] + a[r] / 2;
-        int mid = upper_bound(all(a), m) - a.begin();
-        if (mid == a.size()) {
-            return -1;
-        }
-        binarySum(a, l, mid - 1);
-        binarySum(a, mid, r);
-    }
-    return -1;
-}
-
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
     while (t--) {
-        INT(n, q);
-        VEC(ll, a, n);
-        sort(all(a));
-        // max tree height = __lg(a[n-1]) + 1 (can be less)
-        // if max == mid return.
-        binarySum(a, 0, n - 1);
-        VEC(ll, s, q);
-        rep(i, q) {
-            if (ans.find(s[i]) != ans.end()) {
-                cout << "YES\n";
-            } else {
-                cout << "NO\n";
+        INT(n);
+        vi h(n), w(n);
+        rep(i, n) {
+            cin >> h[i] >> w[i];
+            if (w[i] > h[i]) {
+                swap(h[i], w[i]);
             }
+        }
+        vi p(n);
+        iota(all(p), 0);
+        sort(all(p), [&](int i, int j) { return h[i] < h[j]; });
+        vi ans(n, -1);
+        int min_w = -1;
+        for (int i = 0, j = 0; i < n; i = j) {
+            while (j < n && h[p[i]] == h[p[j]])
+                j++;
+            rep2(k, i, j - 1) {
+                if (min_w >= 0 && w[min_w] < w[p[k]])
+                    ans[p[k]] = min_w;
+            }
+            rep2(k, i, j - 1) {
+                if (min_w < 0 || w[p[k]] < w[min_w])
+                    min_w = p[k];
+            }
+        }
+
+        rep(i, n) {
+            cout << (ans[i] != -1 ? ans[i] + 1 : ans[i]) << " \n"[i == n - 1];
         }
     }
     return 0;

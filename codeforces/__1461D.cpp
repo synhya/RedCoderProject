@@ -21,9 +21,6 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define INT(...)     \
     int __VA_ARGS__; \
     IN(__VA_ARGS__)
-#define LL(...)     \
-    ll __VA_ARGS__; \
-    IN(__VA_ARGS__)
 #define VEC(type, name, size) \
     vector<type> name(size);  \
     IN(name)
@@ -71,6 +68,28 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        // noimi answer. using recursive method in main function.
+        INT(n, q);
+        VEC(ll, a, n);
+        sort(all(a));
+        vector<ll> dp(n + 1); // for dp
+        rep(i, n) dp[i + 1] = dp[i] + a[i];
+        set<ll> s;
+        auto f = [&](auto &&self, int l, int r) -> void {
+            s.emplace(dp[r] - dp[l]);
+            // 다 더해서 빼줄 생각을 하자..
+            ll mid = (a[l] + a[r - 1]) / 2;
+            ll k = ub(a, mid); // distance(a.begin(), upper_bound(a.begin(),a.end(),mid))
+            if (l < k and k != r)
+                self(self, l, k);
+            if (k < r and k != l)
+                self(self, k, r);
+        };
+        f(f, 0, n);
+        while (q--) {
+            INT(x);
+            YES(s.count(x));
+        }
     }
     return 0;
 }

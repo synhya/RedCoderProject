@@ -68,9 +68,38 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
+    LL(k, l, r, t, x, y);
+    if (k < l || k > r)
+        return cout << "No\n", 0;
+
+    if (x > y) {
+        if (k + y > r)
+            k -= x, t--;
+        if (k < l)
+            return cout << "No\n", 0;
+        ll canAlive = (k - l) / (x - y);
+        if (canAlive < t)
+            return cout << "No\n", 0;
+        cout << "Yes\n";
+    } else {
+        vector<bool> was(x, false);
+        while (t > 0) {
+            if (was[k % x])
+                return cout << "Yes\n", 0;
+            was[k % x] = true;
+
+            ll canMove = min(t, (k - l) / x);
+            k -= canMove * x;
+            t -= canMove;
+            if (t == 0)
+                return cout << "Yes\n", 0;
+            if (k + y <= r)
+                k += y;
+            k -= x, t--;
+            if (k < l || k > r)
+                return cout << "No\n", 0;
+        }
+        cout << "Yes\n";
     }
     return 0;
 }

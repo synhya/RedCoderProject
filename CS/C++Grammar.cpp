@@ -83,10 +83,14 @@ int main() {
 
     int r = upper_bound(v.begin(), v.end(), v[i] + k) - v.begin();
     // trick to get the index from iterator directly.. -v.begin();
+    // instead we can simply use distance function
+    int R = distance((c).begin(), upper_bound(all(c), (x)));
 
     // when finding min in 3 elements or more (w/o using min_element func)
     // need to use braces .
     int t = min({1, 3, 4}); // min(1,3,4) will occur error
+
+    return cout << "No\n", 0; // returns 0, prints No
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
