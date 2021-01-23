@@ -91,6 +91,12 @@ int main() {
     int t = min({1, 3, 4}); // min(1,3,4) will occur error
 
     return cout << "No\n", 0; // returns 0, prints No
+
+    // UNIQUE 함수.// 1 2 2 2 3 3 1 3 2 2 >>> 1 2 3 1 3 2 ... 바로옆의 중복제거.
+    // 키의 중복을 허용하지않는 set과는 다른 개념이다!
+    unique(v.begin(), v.end());
+    int n = unique(a.begin(), a.end()) - a.begin();
+    a.resize(n); // unique함수 사용후 재배열시 이렇게함. 1 2 3 1 3 2
 }
 struct test {
     static constexpr int INF = 1e9 + 7;

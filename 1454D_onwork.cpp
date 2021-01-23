@@ -71,6 +71,19 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
+        LL(n);
+        int k = -1;
+        rep2(i, 1, n) {
+            int p = i * i;
+            int cmp;
+            if (n % p) {
+                cmp = 2;
+                while (n % p == 0) {
+                    p *= i;
+                    cmp++;
+                }
+            }
         }
+    }
     return 0;
 }

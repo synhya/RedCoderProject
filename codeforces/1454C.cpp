@@ -71,6 +71,26 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        }
+        INT(n);
+        vi a(n);
+        for (auto &it : a)
+            cin >> it;
+        vi res(n + 1, 1);
+
+        n = unique(a.begin(), a.end()) - a.begin();
+        //cout << (*n); // returns end iterator.
+        a.resize(n);
+        // instead we can do
+        //a.erase(unique(all(a)), a.end()); n = a.size();
+
+        rep(i, n) res[a[i]] += 1;
+        res[a[0]] -= 1;
+        res[a[n - 1]] -= 1;
+        int ans = 1e9;
+        rep(i, n) ans = min(ans, res[a[i]]);
+        cout << ans << endl;
+    }
     return 0;
 }
+// 1 1 2 1 4 1 5 1 2 4 5 2 2 1
+// 1 2 4 5 6 2 4 1 3 5 3 2 1 5 2 4 1

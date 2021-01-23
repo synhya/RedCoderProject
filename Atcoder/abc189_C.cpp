@@ -68,9 +68,34 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
+    INT(n);
+    VEC(int, a, n);
+    ll ans = 0;
+    rep(i, n) {
+        int mi = a[i];
+        rep2(j, i, n - 1) {
+            mi = min(mi, a[j]);
+            ans = max(ans, mi * (j - i + 1));
         }
+    } // O(n^2);
+    cout << ans << endl;
     return 0;
 }
+/* my answer
+    const int N = 100005;
+    ll a[N];
+
+    INT(n);
+    rep(i, n) {
+        int x;
+        cin >> x;
+        rep2(j, 1, x) {
+            a[j]++;
+        }
+    }
+    ll mx = -1;
+    rep2(i, 1, 100000) {
+        mx = max((a[i] * i), mx);
+    }
+    cout << mx << endl;
+*/

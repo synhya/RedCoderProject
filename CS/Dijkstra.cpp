@@ -49,25 +49,26 @@ int dijkstra(edge g, int n, int s) {
     pq.push({s, 0});
     while (!pq.empty()) {
         int index = pq.top().first;
-        int minValue = -pq.top().second; // weight
+        int minValue = -pq.top().second; // weight ( pq.push({edge.to, -newDist}); )
         // **** -pq.top().second. edgeWeight를 음수로 변경하면
         // **** maxheap을 minheap으로 변경할수 있다.
         // .> 기본적으로 c++ queue는 poll기능이 없기때문에
         //    ascending 으로 정리되는 큐에서 최소distance부터 가져오기 위해서는
         //  ` -pq.top() , pq.pop() 이 방식으로 최솟값 가져오고
         //  ` pq.push ({..., -newDist}) 이 방식으로 저장하자
-        pq.pop(); // from backward ofcourse
+        pq.pop(); // from backward
         vis[index] = true;
         if (dist[index] < minValue) // already found better route
-            continue;
+            continue;               // dist[1] = 3 and say there is (1,5) in queue then it will skip
         for (auto edge : g[index]) {
-            if (vis[edge.to])
+            if (vis[edge.to]) // 1번 엣지는 방문한적이 없다. (0 방문하고 2감)
                 continue;
             int newDist = dist[index] + edge.cost;
-            // {1, 4} exists and dist[2] = 1, edge(2,1).cost = 2 appears > newDist = 3;
-            if (newDist < dist[edge.to]) { // update if newDist is shorter ( 3 < 4 )
-                dist[edge.to] = newDist;
-                pq.push({edge.to, -newDist});
+            // {1(from start to edge1), 4(cost)} exists and
+            //dist[2] = 1, edge(2,1).cost = 2 appears > newDist = 3;
+            if (newDist < dist[edge.to]) {    // update if newDist is shorter ( 3 < 4 )
+                dist[edge.to] = newDist;      // (1,3);
+                pq.push({edge.to, -newDist}); // 1로가는 비용이 이젠 3이다.
             }
         }
     }
