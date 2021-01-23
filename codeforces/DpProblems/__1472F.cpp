@@ -67,20 +67,33 @@ typedef vector<int> vi;
 
 void solve() {
     INT(n, m);
-    vector<pi> pz(n, {0, 0});
+    map<int, int> v;
     rep(i, m) {
         int x, y;
         cin >> x >> y;
-        pz[y].first = x;
-        pz[y].second = 1;
+        v[y] |= (1 << (x - 1)); // v[y] == 0 or 1
     }
-    if (m % 2) {
-        cout << "No\n";
-        return;
+    const int FULL = 3;
+    v[2e9] = FULL;
+    int hasLast = 0, lastColor = 0;
+    for (auto [x, mask] : v) {
+        if (mask != FULL && hasLast) {
+            int color = (x + mask) % 2;
+            if (lastColor == color) {
+                cout << "No\n";
+                return;
+            } else {
+                hasLast = false;
+            }
+        } else if (mask == FULL && hasLast) {
+            cout << "No\n";
+            return;
+        } else if (mask != FULL) {
+            lastColor = (x + mask) % 2; // 0 or 1 (row value)
+            hasLast = true;
+        }
     }
-    rep(i, n) {
-        if (pz[i].second == 1)
-    }
+    cout << "Yes\n";
 }
 
 int main() {
