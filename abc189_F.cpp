@@ -65,38 +65,13 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+void solve() {
+    INT(n, m, k);
+    VEC(int, a, k);
+}
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    INT(n);
-    VEC(int, a, n);
-    ll ans = 0;
-    rep(i, n) {
-        int mi = a[i];
-        rep2(j, i, n - 1) {
-            mi = min(mi, a[j]);
-            ans = max(ans, mi * (j - i + 1));
-        }
-    } // O(n^2);
-    cout << ans << endl;
+    solve();
     return 0;
 }
-/* my answer
-    const int N = 100005;
-    ll a[N];
-
-    INT(n);
-    rep(i, n) {
-        int x;
-        cin >> x;
-        rep2(j, 1, x) {
-            a[j]++;
-        } // 4 1 1 2 4 4 1 1 4 4 ?? 4 4 1 1 에서 
-        // 4 를 선택하면 처음 4 1 1 2 의 4는 선택할수가 없기 때문에 답이 아니다.
-    }
-    ll mx = -1;
-    rep2(i, 1, 100000) {
-        mx = max((a[i] * i), mx);
-    }
-    cout << mx << endl;
-*/

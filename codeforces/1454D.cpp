@@ -72,17 +72,34 @@ int main() {
     std::cin >> t;
     while (t--) {
         LL(n);
-        int k = -1;
-        rep2(i, 1, n) {
-            int p = i * i;
-            int cmp;
-            if (n % p) {
-                cmp = 2;
-                while (n % p == 0) {
-                    p *= i;
-                    cmp++;
-                }
+        ll ans = 1;
+        ll res = 0;
+        rep2(i, 2, n) {
+            ll p = i * i;
+            ll cmp = 1;
+            if (p > n)
+                break;
+            while (n % p == 0 && p <= n) {
+                p *= i;
+                cmp++;
             }
+            if (cmp > ans) {
+                ans = cmp; // 54 의 경우 3
+                res = i;   // 54 의 경우 3 >> 3 으로 3번 나눈다. 3 3 6
+            }
+        }
+        cout << ans << endl;
+
+        if (res) {
+            ll tmp = res;
+            res = 1;
+            rep(i, ans - 1) {
+                res *= tmp;
+                cout << tmp << " ";
+            }
+            cout << n / res << endl;
+        } else {
+            cout << n << endl;
         }
     }
     return 0;

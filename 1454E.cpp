@@ -64,39 +64,41 @@ typedef vector<int> vi;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+int ans;
+void dfs(int u, vector<vi> e, vi v2) {
+    if (v2[u])
+        return;
+    v2[u] = 1;
+    ans++;
+    for (auto v : e[u]) {     
+        //cout << u << v << " ";
+        dfs(v, e, v2);
+    }
+    return;
+}
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    INT(n);
-    VEC(int, a, n);
-    ll ans = 0;
-    rep(i, n) {
-        int mi = a[i];
-        rep2(j, i, n - 1) {
-            mi = min(mi, a[j]);
-            ans = max(ans, mi * (j - i + 1));
+    int t;
+    std::cin >> t;
+    while (t--) {
+        INT(n); // num of vertex and edge
+        vv(int, e, n);
+        rep(i, n) {
+            int x, y;
+            cin >> x >> y;
+            --x, --y;
+            e[x].emplace_back(y);
+            e[y].emplace_back(x); // undirected.. 잊지말자.
         }
-    } // O(n^2);
-    cout << ans << endl;
+        vi v1(n); // 1 부터 4 까지. ex> 2에서 시작해서 1가는경우
+        ans = 0;
+        rep(i, n) {
+            vi v2(n); // 1에서 돌면서 2,3,4까지갔는데 또 2,3로 가는 경우
+            dfs(i, e, v2);
+        }
+        cout << (ans - n)/2 << endl;
+    }
     return 0;
 }
-/* my answer
-    const int N = 100005;
-    ll a[N];
-
-    INT(n);
-    rep(i, n) {
-        int x;
-        cin >> x;
-        rep2(j, 1, x) {
-            a[j]++;
-        } // 4 1 1 2 4 4 1 1 4 4 ?? 4 4 1 1 에서 
-        // 4 를 선택하면 처음 4 1 1 2 의 4는 선택할수가 없기 때문에 답이 아니다.
-    }
-    ll mx = -1;
-    rep2(i, 1, 100000) {
-        mx = max((a[i] * i), mx);
-    }
-    cout << mx << endl;
-*/
