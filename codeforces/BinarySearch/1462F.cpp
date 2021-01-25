@@ -62,12 +62,48 @@ int main() {
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
-    while (t--) {
+    while (t--) { //tutorial answer
+        vi L;
+        vi R;
+        INT(n);
+        vector<pi> v(n);
+        for (auto &[l, r] : v) {
+            cin >> l >> r;
+            L.push_back(l);
+            R.push_back(r);
+        }
+        sort(all(L));
+        sort(all(R));
+        int ans = n - 1;
+        for (auto [l, r] : v) {
+            int left = lower_bound(all(R), l) - R.begin();
+            int right = max(0, n - (int)(upper_bound(all(L), r) - L.begin()));
+            ans = min(ans, left + right);
+        } // O(n * log n)
+        cout << ans << endl;
+    }
+    return 0;
+}
+/* my answer
         INT(n);
         vector<pi> seg(n);
         rep(i, n) {
             cin >> seg[i].l >> seg[i].r; // 1<= l <= r <= 10^9
         }
-    }
-    return 0;
-}
+        vi p(n);
+        iota(all(p), 0);
+        int ans = 1e9;
+        sort(all(p), [&](int i, int j) { return seg[i].r - seg[i].l > seg[j].r - seg[j].l; });
+        rep(i, n) {
+            if (seg[p[i]].r - seg[p[i]].l < seg[p[0]].r - seg[p[0]].l)
+                break;
+            int cnt = 0;
+            rep(k, n) {
+                if (seg[k].r < seg[p[i]].l || seg[k].l > seg[p[i]].r)
+                    cnt++;
+            }
+
+            ans = min(cnt, ans);
+        }
+        cout << ans << endl;
+*/
