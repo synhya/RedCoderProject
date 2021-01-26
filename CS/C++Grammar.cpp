@@ -97,6 +97,14 @@ int main() {
     unique(v.begin(), v.end());
     int n = unique(a.begin(), a.end()) - a.begin();
     a.resize(n); // unique함수 사용후 재배열시 이렇게함. 1 2 3 1 3 2
+
+    int n = 10;
+    vi stak;
+    vi a(n);
+    if (stak.empty() || a[0] > a[stak.back()]) // no error
+        cout << 4 << endl;
+    if (a[0] > a[stak.back()])
+        cout << 56 << endl; // error
 }
 struct test {
     static constexpr int INF = 1e9 + 7;

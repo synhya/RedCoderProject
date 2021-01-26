@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define all(c) c.begin(), c.end()
-#define rep(i, n) for (ll i = 0; i < n; ++i)
-#define rep2(i, a, b) for (ll i = a; i <= b; ++i)
-#define rep3(i, a, b) for (ll i = a; i >= b; --i)
+#define rep(i, n) for (int i = 0; i < n; ++i)
+#define rep2(i, a, b) for (int i = a; i <= b; ++i)
+#define rep3(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 #define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
@@ -58,6 +58,7 @@ using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
@@ -71,6 +72,6 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        }
+    }
     return 0;
 }

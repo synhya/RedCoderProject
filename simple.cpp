@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define all(c) c.begin(), c.end()
-#define rep(i, n) for (ll i = 0; i < n; ++i)
-#define rep2(i, a, b) for (ll i = a; i <= b; ++i)
-#define rep3(i, a, b) for (ll i = a; i >= b; --i)
+#define rep(i, n) for (int i = 0; i < n; ++i)
+#define rep2(i, a, b) for (int i = a; i <= b; ++i)
+#define rep3(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 #define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
@@ -58,7 +58,6 @@ using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
-typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
@@ -66,39 +65,13 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
-void solve() {
-    INT(n, m, k);
-    vector<vector<ld>> dp(n, vector<ld>(2));
-    ld x = 0, y = 0;
-    vector<bool> err(n);
-    rep(i, k) {
-        INT(a);
-        err[a] = true;
-    }
-    rep3(i, n - 1, 0) {
-        if (err[i]) {
-            dp[i][0] = 0;
-            dp[i][1] = 1;
-        } else {
-            dp[i][0] = 1 + x / m;
-            dp[i][1] = y / m;
-        }
-        x += dp[i][0];
-        y += dp[i][1];
-        if (i + m < n) {
-            x -= dp[i + m][0];
-            y -= dp[i + m][1];
-        }
-    }
-    if (dp[0][1] > (1 - 1e-9)) {
-        cout << -1 << endl;
-    } else {
-        cout << setprecision(20) << dp[0][0] / (1 - dp[0][1]) << endl;
-    }
-}
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    solve();
+    int t;
+    std::cin >> t;
+    while (t--) {
+        
+    }
     return 0;
 }

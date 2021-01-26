@@ -25,4 +25,25 @@ int main() {
 
     int num3 = upper_bound(v.begin(), v.end(), 3) - lower_bound(v.begin(), v.end(), 3);
     // 5 - 1 = 4 >> 3의 갯수를 반환한다. (4개있음);
+
+    // compare functiond을 네번째 인자로 추가할수 있다.
+    std::vector<PriceInfo> prices = {{100.0}, {101.5}, {102.5}, {102.5}, {107.3}};
+    for (double to_find : {102.5, 110.2}) {
+        auto prc_info = std::lower_bound(prices.begin(), prices.end(), to_find,
+                                         [](const PriceInfo &info, double value) {
+                                             return info.price < value;
+                                         });
+
+        prc_info != prices.end()
+            ? std::cout << prc_info->price << " at index " << prc_info - prices.begin()
+            : std::cout << to_find << " not found";
+        std::cout << '\n';
+    }
+    // 비교함수 응용
+    vector<int> a = {4, 5, 5, 5, 6, 7, 10, 11};
+    vector<int> stk(8);
+    iota(all(stk), 0);
+    int x = 10;
+    auto it = lower_bound(all(stk), x, [&](int i, int x) { return a[i] < x; });
+    cout << *it << endl; // 6
 }

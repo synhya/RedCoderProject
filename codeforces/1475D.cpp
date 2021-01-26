@@ -1,9 +1,9 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define all(c) c.begin(), c.end()
-#define rep(i, n) for (ll i = 0; i < n; ++i)
-#define rep2(i, a, b) for (ll i = a; i <= b; ++i)
-#define rep3(i, a, b) for (ll i = a; i >= b; --i)
+#define rep(i, n) for (int i = 0; i < n; ++i)
+#define rep2(i, a, b) for (int i = a; i <= b; ++i)
+#define rep3(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 #define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
@@ -50,7 +50,7 @@ template <class T>
 void scan(T &a) { cin >> a; }
 void IN() {}
 template <class Head, class... Tail>
-void IN(Head &head, Tail &... tail) {
+void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
@@ -60,26 +60,59 @@ using u32 = unsigned;
 typedef long long int ll;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
-bool found;
-void shift(multiset<int> &l, multiset<int> &r, int val) {
-    l.erase(l.find(val));
-    r.insert(val);
-}
-
-void check(const multiset<int> &lf, const multiset<int> &mid, const multiset<int> &rg) {
-    if (found || lf.empty() || mid.empty() || rg.empty()) {
+void solve() {
+    INT(n,m);
+    vi a(n);
+    ll sum = 0;
+    rep(i,n) {
+        cin >> a[i];
+        sum += a[i];
+    }
+    vi b(n);
+    rep(i,n) {
+        cin >> b[i];
+    }
+    if( sum < m) {
+        cout<< -1 << '\n';
         return;
     }
-    if (*lf.rbegin() == *mid.begin() && *mid.begin() == *rg.rbegin()) {
-        found = true;
-        cout << "YES\n";
-        cout << lf.size() << " " << mid.size() << " " << rg.size() << endl;
+    vi k1;
+    vi k2;
+    rep(i,n) {
+        if(b[i] == 1) {
+            k1.push_back(a[i]);
+        } else {
+            k2.push_back(a[i]);
+        }
     }
+    sort(k1.rbegin(), k1.rend());
+    sort(k2.rbegin(), k2.rend());
+    int ans = 1e9;
+    int n1 = k1.size();
+    int n2 = k2.size();
+    sum = 0;
+    rep(i,n2) {
+        sum += k2[i];
+    }
+    int j = 0;
+    rep3(i, n2, 0) {
+        while( j < n1 && sum < m) {
+            sum += k1[j];
+            j +=1;
+        }
+        if( sum >= m) {
+            ans = min(ans, 2*i + j);
+        }
+        if(i > 0) {
+            sum -= k2[i-1]; // 가성비 안좋은것부터.
+        }
+    }
+    cout<< ans << endl;
 }
 
 int main() {
@@ -88,43 +121,39 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        }
+        solve();
+    }
     return 0;
 }
-/* tutorial answer
-        INT(n);
-        VEC(int, a, n);
-        found = false;
-        multiset<int> lf, mid(all(a)), rg;
-        int r = n - 1;
-
-        rep(l, n - 2) {
-            shift(mid, lf, a[l]);
-            while (r - 1 >= l && a[r] <= *lf.rbegin()) {
-                shift(mid, rg, a[r]);
-                --r;
-            }
-            while (r - 1 < l) { // l을 밀다가 mid가 empty된 경우.
-                shift(rg, mid, a[r + 1]);
-                ++r;
-            }
-
-            check(lf, mid, rg);
-            // 1 3 2 4 3 3 1 이 경우 i가 1일때는 1 3 / 2 4 / 3 3 1
-            // i=2일때 1 3 2 / 4 / 3 3 1 >> 아래에서 1 3 2 / 4 3 / 3 1 로 확인가능
-            if (rg.empty())
-                continue;
-
-            shift(rg, mid, a[r + 1]);
-            check(lf, mid, rg);
-            shift(mid, rg, a[r + 1]);
-            // 1 3 4 3 3 1 이 경우 rg는 3 3 1 까지 땡길꺼고 lf는 1 3 일꺼니까
-            // 4 에서 3을 하나 가져오고.. 이게 3보다 작으면 ( 1 3 4 2 3 1)
-            // 성립이 안되고 3과 같으면 성립하는거다.
-            // 하나만 가져오면 알수 있으므로(3인지 3보다작은지) 하나만 땡겨본다.
-            // 만약에 1 3 2 4 3 3 1의 경우. i가 3까지가야 결과 알수 있을것.
+/* 
+    INT(n, m);
+    VEC(int, v, n);
+    vi a, b;
+    for (int &e : v) {
+        INT(x);
+        if (x == 1) {
+            a.push_back(e);
+        } else
+            b.push_back(e);
+    }
+    sort(a.rbegin(), a.rend()); // by smallest size
+    sort(b.rbegin(), b.rend());
+    ll curSumA = 0;
+    int r = (int)b.size();
+    ll curSumB = accumulate(all(b), 0ll); // accumulate(begin(),end(), init)
+    // init 에 v 부분을 합한것. init > 0ll
+    ll ans = inf;
+    rep2(l, 0, a.size()) {
+        while (r > 0 && curSumA + curSumB - b[r - 1] >= m) {
+            r--;
+            curSumB -= b[r];
+        } // 2인 값들부터 작은 용량부터
+        if (curSumB + curSumA >= m) {
+            ans = min(ans, 2 * r + l);
         }
-        if (!found) {
-            cout << "NO\n";
+        if (l != a.size()) {
+            curSumA += a[l];
         }
+    }
+    cout << (ans == inf ? -1 : ans) << endl;
 */
