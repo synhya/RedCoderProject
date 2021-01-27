@@ -72,7 +72,6 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        cout << -8/7 << endl;
     }
     return 0;
 }

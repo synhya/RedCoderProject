@@ -58,7 +58,6 @@ using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
-typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
@@ -72,7 +71,31 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        cout << -8/7 << endl;
+        int n;
+        cin >> n;
+        vector<int> a(n);
+        for (auto &e : a) {
+            cin >> e;
+        }
+        vi A, B;
+        for (int i = 1; i < n; i++) {
+            if (a[i] == a[0])
+                A.push_back(i);
+            else
+                B.push_back(i);
+        }
+        if (B.empty()) {
+            cout << "NO\n";
+            continue;
+        } else {
+            YES();
+            rep(i, B.size()) {
+                cout << 1 << " " << B[i] + 1 << endl;
+            }
+            rep(i, A.size()) {
+                cout << B[0] + 1 << " " << A[i] + 1 << endl;
+            }
+        }
     }
     return 0;
 }

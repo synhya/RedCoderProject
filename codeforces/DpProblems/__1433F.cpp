@@ -61,18 +61,44 @@ typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+const int N = 75;
+int a[N][N];
+int dp[N][N][N][N];
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        cout << -8/7 << endl;
+    int n, m, k;
+    cin >> n >> m >> k;
+    rep(i, n) rep(j, m) {
+        cin >> a[i][j];
     }
+    rep(i, N) rep(j, N) rep(cnt, N) rep(rem, N) dp[i][j][cnt][rem] = -inf;
+    dp[0][0][0][0] = 0;
+    rep(i, n) rep(j, m) rep(cnt, m / 2 + 1) rep(rem, k) {
+        if (dp[i][j][cnt][rem] == -inf)
+            continue;
+        int ni = (j == m - 1 ? i + 1 : i); // next i
+        int nj = (j == m - 1 ? 0 : j + 1);
+        if (i != ni) {
+            dp[ni][nj][0][rem] = max(dp[ni][nj][0][rem], dp[i][j][cnt][rem]);
+        } else {
+            dp[ni][nj][cnt][rem] = max(dp[ni][nj][cnt][rem], dp[i][j][cnt][rem]);
+        }
+        if (cnt + 1 <= m / 2) {
+            int nrem = (rem + a[i][j]) % k;
+            if (i != ni) {
+                dp[ni][nj][0][nrem] = max(dp[ni][nj][0][nrem], dp[i][j][cnt][rem] + a[i][j]);
+            } else {
+                dp[ni][nj][cnt + 1][nrem] = max(dp[ni][nj][cnt + 1][nrem], dp[i][j][cnt][rem] + a[i][j]);
+            }
+        }
+    }
+    cout << max(0, dp[n][0][0][0]) << endl;
+
     return 0;
 }

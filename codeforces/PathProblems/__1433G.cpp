@@ -61,18 +61,68 @@ typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+void dijkstra(vector<vector<pi>> g, vi &d, int n, int s) {
+    vector<bool> vis(n, false);
+    d = vi(n, inf);
+    d[s] = 0;
+    priority_queue<pair<int, int>> pq;
+    pq.push({s, 0});
+    while (!pq.empty()) {
+        int v = pq.top().first;
+        int minValue = -pq.top().second;
+        pq.pop();
+        vis[v] = true;
+        if (d[v] < minValue)
+            continue;
+        for (auto [to, w] : g[v]) {
+            if (vis[to])
+                continue;
+            int newDist = d[v] + w;
+            if (newDist < d[to]) {
+                d[to] = newDist;
+                pq.push({to, -newDist});
+            }
+        }
+    }
+}
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        cout << -8/7 << endl;
+    int n, m, k;
+    cin >> n >> m >> k;
+    vector<vector<pi>> g(n);
+    rep(i, m) {
+        int x, y, w;
+        cin >> x >> y >> w;
+        --x, --y;
+        g[x].emplace_back(y, w);
+        g[y].emplace_back(x, w);
     }
+    vector<pi> r(k);
+    for (auto &[a, b] : r) {
+        cin >> a >> b;
+        --a, --b;
+    }
+    vector<vi> d(n);
+    rep(v, n) {
+        dijkstra(g, d[v], n, v);
+    }
+    int ans = inf;
+    rep(v, n) {
+        for (auto [to, w] : g[v]) { // 모든 엣지 하나씩 지워본다.
+            int cur = 0;
+            for (auto [a, b] : r) {
+                cur += min({d[a][b], d[a][v] + d[to][b], d[a][to] + d[v][b]});
+            }
+            ans = min(ans, cur);
+        }
+    }
+    cout << ans << endl;
     return 0;
 }

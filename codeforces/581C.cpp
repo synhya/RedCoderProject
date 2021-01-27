@@ -58,6 +58,7 @@ using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
 typedef long long int ll;
+typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
@@ -68,10 +69,32 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        
+    INT(n, k);
+    VEC(int, a, n);
+    sort(all(a), [&](int i, int j) { return i % 10 > j % 10; });
+    int ans = 0;
+    rep(i, n) {
+        ans += a[i] / 10;
     }
+    while (k > 0) {
+        int tmp = k;
+        rep(i, n) {
+            if (a[i] == 100)
+                continue;
+            int use = 10 - (a[i] % 10);
+            if (k >= use) {
+                k -= use;
+                a[i] += use;
+                ans++;
+            } else {
+                k = -1;
+                break;
+            }
+        }
+        if (tmp == k)
+            break;
+    }
+
+    cout << ans << endl;
     return 0;
 }

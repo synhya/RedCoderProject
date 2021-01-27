@@ -1,5 +1,5 @@
-
-
+#include <bits/stdc++.h>
+using namespace std;
 /////////////// RANGE MINIMUM QUEUE ///////////////////
 #define inf 1e9 + 7;
 struct SegTree {

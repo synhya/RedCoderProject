@@ -69,10 +69,16 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        cout << -8/7 << endl;
+
+    ll n;
+    cin >> n;
+    vector<ll> fact(n + 1);
+    fact[0] = 1;
+    rep2(i, 0, n - 1) {
+        fact[i + 1] = fact[i] * (i + 1);
     }
+    ll ans = fact[n] / fact[n / 2] / fact[n / 2] * fact[n / 2 - 1] * fact[n / 2 - 1] / 2;
+    cout << ans << endl;
+
     return 0;
 }

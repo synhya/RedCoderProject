@@ -61,7 +61,7 @@ typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9 + 7;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
@@ -70,9 +70,32 @@ int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
-    std::cin >> t;
+    t = 1;
+    //std::cin >> t;
     while (t--) {
-        cout << -8/7 << endl;
+        INT(n, m);
+        vector<ll> s(4, 1e18);
+        INT(c);
+        while (c--) {
+            LL(x, y);
+            s[0] = min(s[0], x + y);
+            s[1] = min(s[1], x - y);
+            s[2] = min(s[2], -x + y);
+            s[3] = min(s[3], -x - y);
+        }
+        ll ans = 1e18;
+        int aid = -1;
+        INT(h);
+        rep2(i, 1, h) {
+            LL(x, y);
+            ll t = max({x + y - s[0], x - y - s[1], -x + y - s[2], -x - y - s[3]});
+            if (t < ans) {
+                ans = t;
+                aid = i;
+            }
+        }
+        cout << ans << endl
+             << aid << endl;
     }
     return 0;
 }

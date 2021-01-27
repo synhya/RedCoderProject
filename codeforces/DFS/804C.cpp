@@ -63,16 +63,70 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
-// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
+const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
+
+int n, m;
+int color[N];
+set<int> S;
+vi vertex[N], e[N];
+void colorpicker(int c) {
+    for (auto x : vertex[c]) { //vertex의 icecream들
+        if (color[x])
+            S.erase(color[x]);
+    }
+    for (auto x : vertex[c]) {
+        if (!color[x]) {
+            color[x] = *S.begin(); // 1
+            S.erase(color[x]);
+        }
+    }
+    for (auto x : vertex[c]) {
+        S.insert(color[x]);
+    }
+}
+void dfs(int a, int pa) { // 0, -1
+    colorpicker(a);
+    for (auto x : e[a]) {
+        if (x == pa)
+            continue;
+        dfs(x, a);
+    }
+    return;
+}
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
-        cout << -8/7 << endl;
+    cin >> n >> m;
+    rep2(i, 1, m) S.insert(i);
+    int maxv = 0;
+    rep(i, n) {
+        int Q;
+        cin >> Q;
+        rep(i, Q) {
+            int t;
+            cin >> t;
+            --t;
+            vertex[i].push_back(t);
+        }
+    }
+    rep(i, n - 1) {
+        int u, v;
+        cin >> u >> v;
+        --u, --v;
+        e[u].push_back(v);
+        e[v].push_back(u);
+    }
+    dfs(0, -1);
+    rep(i, m) {
+        if (color[i] == 0) // 엣지가 없는 경우.. 독립노드.
+            color[i] = 1;
+        maxv = max(maxv, color[i]);
+    }
+    cout << maxv << endl;
+    rep(i, m) {
+        cout << color[i] << " ";
     }
     return 0;
 }

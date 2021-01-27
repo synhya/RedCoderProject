@@ -41,7 +41,8 @@ using namespace std;
 // n - number of nodes in the graph
 // s - starting node (0<= s < n)
 
-int dijkstra(edge g, int n, int s) {
+// 부연설명.
+int dijkstra(vector<vi> g, int n, int s) {
     vector<bool> vis(n, false); // visited default false
     vector<int> dist(n, INF);
     dist[s] = 0; // starting node
