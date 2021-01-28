@@ -69,9 +69,38 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) {
+    INT(d);
+    INT(n, m); //matrix
+    vi L, R, T, B;
+    vi l(d), r(d), t(d), b(d);
+    rep(i, d) {
+        INT(x1, y1, x2, y2);
+        l[i] = min(x1, x2);
+        r[i] = max(x1, x2);
+        t[i] = min(y1, y2);
+        b[i] = max(y1, y2);
     }
+    L = l, R = r, T = t, B = b;
+    sort(all(L));
+    sort(all(R));
+    sort(all(T));
+    sort(all(B));
+    INT(cntL, cntR, cntT, cntB);
+    rep(i, d) {
+        int cntl = lower_bound(all(L), r[i]) - L.begin();
+        int cntr = R.end() - upper_bound(all(R), l[i]);
+        if (l[i] < r[i])
+            --cntl, --cntr;
+        int cntt = lower_bound(all(T), b[i]) - T.begin();
+        int cntb = B.end() - upper_bound(all(B), t[i]);
+        if (t[i] < b[i])
+            --cntt, --cntb;
+
+        if (cntl == cntL && cntr == cntR && cntt == cntT && cntb == cntB) {
+            cout << i + 1 << endl;
+            return 0;
+        }
+    }
+    cout << -1 << endl;
     return 0;
 }

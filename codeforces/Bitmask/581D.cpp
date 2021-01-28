@@ -66,9 +66,74 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+// big square board(!rectangle)
+void solve() {
+    vi X2(3), Y2(3), X(3), Y(3);
+    rep(i, 3) cin >> X2[i] >> Y2[i];
+    rep(mask, 8) {
+        rep(i, 3) {
+            if (mask & (1 << i))
+                X[i] = X2[i], Y[i] = Y2[i];
+            else
+                X[i] = Y2[i], Y[i] = X2[i];
+            // 모든 rotate 발생상황을 마스크로 해결!
+        }
+        if (X[0] == X[1] && X[1] == X[2] && X[0] == Y[0] + Y[1] + Y[2]) {
+            cout << X[0] << endl;
+            rep(i, 3) {
+                rep(y, Y[i]) {
+                    rep(x, X[i]) cout << (char)('A' + i);
+                    cout << endl;
+                }
+            }
+            return;
+        }
+        if (X[0] + X[1] == X[2] && Y[0] == Y[1] && X[2] == Y[0] + Y[2]) {
+            cout << X[2] << endl;
+            rep(y, Y[2]) {
+                rep(x, X[2]) cout << "C";
+                cout << endl;
+            }
+            rep(y, Y[0]) {
+                rep(x, X[0]) cout << "A";
+                rep(x, X[1]) cout << "B";
+                cout << endl;
+            }
+            return;
+        }
+        if (X[0] + X[2] == X[1] && Y[0] == Y[2] && X[1] == Y[0] + Y[1]) {
+            cout << X[1] << endl;
+            rep(y, Y[1]) {
+                rep(x, X[1]) cout << "B";
+                cout << endl;
+            }
+            rep(y, Y[0]) {
+                rep(x, X[0]) cout << "A";
+                rep(x, X[2]) cout << "C";
+                cout << endl;
+            }
+            return;
+        }
+        if (X[2] + X[1] == X[0] && Y[2] == Y[1] && X[0] == Y[0] + Y[2]) {
+            cout << X[0] << endl;
+            rep(y, Y[0]) {
+                rep(x, X[0]) cout << "A";
+                cout << endl;
+            }
+            rep(y, Y[1]) {
+                rep(x, X[1]) cout << "B";
+                rep(x, X[2]) cout << "C";
+                cout << endl;
+            }
+            return;
+        }
+    }
+    cout << -1 << endl;
+}
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-
+    solve();
     return 0;
 }

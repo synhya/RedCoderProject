@@ -71,8 +71,35 @@ int main() {
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
-    while (t--) {
-        cout << 665228107582 / 2 << endl;
+    while (t--) { //symmetric 표현을 몰라서 오래걸렸따..
+        INT(n);
+        map<ll, int> ms;
+        bool flag = true;
+        vector<ll> num;
+        rep(i, 2 * n) {
+            LL(x);
+            num.push_back(x);
+            if (x % 2)
+                flag = false;
+            ms[x]++; // for counting;
+        }
+        for (auto x : ms) {
+            if (x.second % 2 || x.second > 2)
+                flag = false;
+        }
+        sort(all(num));
+        ll bigger = 0;
+        for (int i = 2 * n - 1; i >= 0; i -= 2) {
+            ll x = num[i];
+            x -= 2 * bigger;
+            if (x % (i + 1))
+                flag = false;
+            x /= (i + 1); // 4
+            if (x <= 0)
+                flag = false;
+            bigger += x;
+        }
+        YES(flag);
     }
     return 0;
 }

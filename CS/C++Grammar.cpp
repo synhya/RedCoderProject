@@ -105,6 +105,11 @@ int main() {
         cout << 4 << endl;
     if (a[0] > a[stak.back()])
         cout << 56 << endl; // error
+
+    assert(!v.empty()); // v 가 비어있으면 자동 멈춤! 디버깅용 ( assertion failed )
+
+    function<vector<int>(int)> rec = [&](int i) -> vi {}; // 함수선언방식.
+    // auto rec방식으로 선언시에는 재귀함수만들수없음!
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
