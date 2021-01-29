@@ -63,15 +63,17 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
-// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
+const int N = 200 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+int n;
+ll a[N], d[N];
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
-    while (t--) { //symmetric 표현을 몰라서 오래걸렸따..
+    while (t--) {
         INT(n);
         map<ll, int> ms;
         bool flag = true;
@@ -103,3 +105,23 @@ int main() {
     }
     return 0;
 }
+/* 
+    scanf("%d", &n);
+        for (int i = 0; i < 2 * n; i++)
+            scanf("%lld", &d[i]);
+        sort(d, d + 2 * n);
+        bool ok = true;
+        d[2 * n] = a[n] = 0;
+        for (int i = n - 1; i >= 0; i--) {
+            if (d[2 * i] != d[2 * i + 1])
+                ok = false;
+            ll del = d[2 * i + 2] - d[2 * i];
+            if (del == 0 || del % (2 * (i + 1)) != 0)
+                ok = false;
+            a[i] = a[i + 1] - del / (2 * (i + 1));
+        }
+        if (ok && a[0] > 0)
+            YES();
+        else
+            YES(0);
+*/
