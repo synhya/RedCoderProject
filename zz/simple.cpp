@@ -72,7 +72,6 @@ int main() {
     int t;
     std::cin >> t;
     while (t--) {
-        cout << 665228107582 / 2 << endl;
     }
     return 0;
 }

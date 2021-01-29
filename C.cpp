@@ -63,11 +63,9 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
-const int N = 200 * 1000 + 5; // use for N <= 5 * 10^5
+// const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
-int n;
-ll a[N], d[N];
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
@@ -75,59 +73,29 @@ int main() {
     std::cin >> t;
     while (t--) {
         INT(n);
-        map<ll, int> ms;
-        bool flag = true;
-        vector<ll> num;
-        rep(i, 2 * n) {
-            LL(x);
-            num.push_back(x);
-            if (x % 2)
-                flag = false;
-            ms[x]++; // for counting;
+        VEC(ll, c, n);
+        VEC(ll, a, n);
+        VEC(ll, b, n);
+        ll ans = 0;
+        ll cycle = 0;
+        rep2(i, 1, n - 1) {
+            if (cycle == 0) {
+                cycle += abs(a[i] - b[i]);
+            }
+            //cout << cycle << " ";
+            if (i == n - 1 || a[i + 1] == b[i + 1] || (a[i + 1] == 1 and c[i] == b[i + 1])) {
+                cycle += c[i] - 1;
+            } else {
+                cycle += (c[i] - 1) - abs(b[i + 1] - a[i + 1]);
+            }
+            //cout << cycle << " ";
+            cycle += 2;
+            if (i == n - 1 || abs(b[i + 1] - a[i + 1]) || (a[i + 1] == 1 and c[i] == b[i + 1])) {
+                ans = max(ans, cycle);
+                cycle = 0;
+            }
         }
-        for (auto x : ms) {
-            if (x.second % 2 || x.second > 2)
-                flag = false;
-        }
-        sort(all(num));
-        ll bigger = 0;
-        for (int i = 2 * n - 1; i >= 0; i -= 2) {
-            ll x = num[i];
-            x -= 2 * bigger;
-            if (x % (i + 1))
-                flag = false;
-            x /= (i + 1); // 4
-            if (x <= 0)
-                flag = false;
-            bigger += x;
-        }
-        YES(flag);
+        cout << ans << endl;
     }
     return 0;
 }
-/* best answer.
-    cin>>n;
-        for (int i=0;i<2*n;++i) cin>>a[i];
-        sort(a,a+2*n,greater<int>());
-        for (int i=0;i<n;++i){
-            if (a[i*2]!=a[i*2+1]){
-                cout<<"NO\n";
-                goto cont;
-            }
-            b[i]=a[i*2];
-        }
-        for (int i=1;i<n;++i){
-            if (b[i-1]==b[i]||(b[i-1]-b[i])%(2*(n-i))){
-                cout<<"NO\n";
-                goto cont;
-            }
-            d[i]=(b[i-1]-b[i])/2/(n-i);
-        }
-        for (int i=1;i<n;++i){
-            b[n-1]-=2*i*d[i];
-        }
-        if (b[n-1]<=0||b[n-1]%(2*n)) cout<<"NO\n";
-        else cout<<"YES\n";
- 
-        cont:;
-*/
