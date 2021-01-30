@@ -81,6 +81,14 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-
+    LL(n);
+    ll ans = 0;
+    n *= 2;
+    for (auto d : divisor(n)) {
+        ll k = n / d;
+        if ((d ^ k) & 1)
+            ans++;
+    }
+    cout << ans << endl;
     return 0;
 }
