@@ -71,12 +71,12 @@ int main() {
     std::cin.tie(nullptr);
     int t;
     std::cin >> t;
-    while (t--) {
+    while (t--) { // 베주의 정리 활용한 문제
         LL(n, k);
         VEC(ll, x, n);
         ll d = 0;
         rep(i, n - 1) d = __gcd(d, abs(x[i] - x[n - 1]));
-        if ((k - x[n-1]) % d == 0)
+        if ((k - x[n - 1]) % d == 0)
             YES();
         else
             YES(0);
