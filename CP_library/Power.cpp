@@ -26,6 +26,7 @@ ll power(ll a, ll b) {
 ll divide(ll a, ll b) {
     return a * power(b, P - 2) % P;
 }
+
 // example
 ll fact[N];
 ll invFact[N];
