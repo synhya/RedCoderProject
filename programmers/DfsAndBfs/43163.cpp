@@ -81,8 +81,48 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    while (t--) {
+    string begin;
+    string target;
+    INT(n);
+    vector<string> words(n);
+    cin >> begin >> target;
+    rep(i, n) {
+        cin >> words[i];
     }
+    // USE BFS
+    int answer = 1e9;
+    n = words.size();
+    int s = begin.length();
+
+    queue<pair<string, int>> que;
+    vector<int> visited(n);
+    function<void(string, int)> bfs;
+    bfs = [&](string begin, int cost) -> void {
+        if (begin == target) {
+            answer = min(answer, cost);
+        }
+        for (int i = 0; i < n; i++) {
+            int cnt = 0;
+            for (int j = 0; j < s; j++) {
+                if (begin[j] == words[i][j])
+                    cnt++;
+            }
+            if (cnt == s - 1 and !visited[i]) {
+                visited[i] = 1;
+                que.push({words[i], cost + 1});
+            }
+        }
+        cout << endl;
+        while (!que.empty()) {
+            pair<string, int> next = que.front();
+            que.pop();
+            bfs(next.first, next.second);
+        }
+    };
+    bfs(begin, 0);
+    if (answer == 1e9) {
+        answer = 0;
+    }
+    cout << answer << endl;
     return 0;
 }

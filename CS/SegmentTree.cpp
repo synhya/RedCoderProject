@@ -1,6 +1,7 @@
 // if need to check minimum or sum in range for several times .
 // we use segment tree.. it stores minimum values in tree so works like dp
 // 1454F
+// REMEMBER !! MINIMUM RANGE QUEUE.
 
 #include <bits/stdc++.h>
 using namespace std;

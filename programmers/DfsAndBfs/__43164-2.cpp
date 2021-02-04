@@ -78,12 +78,32 @@ typedef vector<int> vi;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 
+int visited[1000000];
+string ans = "a";
+void dfs(vector<vector<string>> &tickets, string cur, string path, int depth) {
+    if (depth == tickets.size()) {
+        if (path < ans) {
+            ans = path;
+        }
+        return;
+    }
+    for (int i = 0; i < tickets.size(); i++) {
+        if (cur == tickets[i][0] && !visited[i]) {
+            visited[i] = 1;
+            dfs(tickets, tickets[i][1], path + tickets[i][1], depth + 1);
+            visited[i] = 0;
+        }
+    }
+}
+// dfs는 재귀 전후에 무엇을 넣는지가 관건!
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
+    vector<string> answer;
+    vector<vector<string>> tickets;
+    dfs(tickets, "ICN", "ICN", 0);
+    for (int i = 0; i < ans.size(); i += 3) {
+        answer.push_back(ans.substr(i, 3));
     }
     return 0;
 }
