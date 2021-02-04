@@ -67,6 +67,7 @@ int main() {
     //j 와 i의 and값에 들어있는 1의 갯수를 반환한다.
     s[j] = "AB"[__builtin_popcount(j & i) % 2];
 
+    // char(5) 가 53이라고 하자 char(0)은 48이다..!!!
     cout << ('5' - '0') << endl; // 계산 가능하다.. 5반환.
     cout << ('0' - '0') << endl; // char끼리 계산해서 int반환해준다.
     string t += '0' + 1;         // 이런식으로 char로 변환도 가능하다.

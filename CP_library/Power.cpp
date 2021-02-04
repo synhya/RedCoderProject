@@ -41,3 +41,9 @@ ll C(int n, int k) {
     }
     return fact[n] * invFact[k] % mod * invFact[n - k] % mod;
 }
+ll P(int n, int k) {
+    if (k > n) {
+        return 0;
+    }
+    return fact[n] * invFact[n - k] % mod;
+}

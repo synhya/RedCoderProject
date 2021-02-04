@@ -16,6 +16,17 @@ vector<T> divisor(T x) {
     return ans;
 }
 
+// 에라토스테네스의 체. for checking prime num in RANGE,
+// first create che[MX] with 0 values.
+int che[MX];
+for (int i = 2; i <= n; i++) { // che.size() maybe change n to this.
+    if (che[i])
+        continue;
+    for (int j = 2 * i; j <= n; j += i) { //che.size()
+        che[j] = 1;
+    }
+}
+
 int GCD(int a, int b) {
     if (a == 0)
         return b;

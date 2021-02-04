@@ -81,8 +81,38 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    while (t--) {
+
+    vi answer;
+    vi a = {1, 2, 3, 4, 5};
+    vi b = {2, 1, 2, 3, 2, 4, 2, 5};
+    vi c = {3, 3, 1, 1, 2, 2, 4, 4, 5, 5};
+    VEC(int, answers, 5);
+    int acnt = 0, bcnt = 0, ccnt = 0;
+    for (int i = 0; i < answers.size(); i++) {
+        if (a[i % (a.size())] == answers[i])
+            ++acnt;
+        if (b[i % (b.size())] == answers[i])
+            ++bcnt;
+        if (c[i % (c.size())] == answers[i])
+            ++ccnt;
     }
+    vi cnt;
+    cnt.push_back(acnt);
+    cnt.push_back(bcnt);
+    cnt.push_back(ccnt);
+    //cout << acnt << " " << bcnt << " " << ccnt << " ";
+
+    vi p(3);
+    iota(p.begin(), p.end(), 0);
+    sort(p.begin(), p.end(), [&](int i, int j) {if(cnt[i] == cnt[j]) return i < j; else return cnt[i] > cnt[j]; });
+
+    //cout << p[0] + 1 << " ";
+    for (int i = 1; i < p.size(); i++) {
+        //cout << cnt[p[i]] << " " << cnt[p[i - 1]] << endl;
+        if (cnt[p[i]] != cnt[p[i - 1]])
+            break;
+        cout << p[i] + 1 << " ";
+    }
+
     return 0;
 }

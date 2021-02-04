@@ -81,8 +81,84 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    while (t--) {
+    string numbers;
+    cin >> numbers;
+    string temp = numbers;
+    sort(all(temp), greater<char>()); // effective!
+    vector<int> prime(stoi(temp) + 1);
+    prime[0] = 1, prime[1] = 1;
+    for (int i = 2; i < prime.size(); i++) {
+        if (prime[i])
+            continue;
+        for (int j = 2 * i; j < prime.size(); j += i) {
+            prime[j] = 1;
+        }
     }
+    string s, sub;
+    s = numbers;
+    sort(all(s));
+    set<int> primes;
+    int l = s.size();
+    do {
+        for (int i = 1; i <= l; i++) {
+            sub = s.substr(0, i);
+            // 이렇게하면 모든 순열 구할수 있다.
+            if (prime[stoi(sub)]) {
+                primes.insert(stoi(sub));
+            }
+        }
+    } while (next_permutation(all(s)));
+
+    cout << primes.size() << endl;
+
     return 0;
 }
+/* My answer. too long. spaghetti like.
+    int n = numbers.length();
+    vector<int> a(n);
+    for (int i = 0; i < n; i++) {
+        a[i] = numbers[i] - '0';
+        //cout << a[i] << " ";
+    }
+    set<int> res;
+    function<void(vector<int>, int, int)> permutation =
+        [&](vector<int> a, int r, int depth) -> void { //default depth = 0 !
+        if (r == depth) {
+            int tmp = 0;
+            for (int i = depth - 1, j = 1; i >= 0; i--, j *= 10) {
+                tmp += a[i] * j;
+            }
+            res.insert(tmp);
+            return;
+        }
+        for (int i = depth; i < a.size(); i++) {
+            swap(a[i], a[depth]);
+            permutation(a, r, depth + 1);
+            swap(a[i], a[depth]);
+        }
+    };
+    for (int i = 1; i <= n; i++) {
+        vector<int> A = a;
+        permutation(A, i, 0);
+    }
+
+    vector<int> che(*(prev(res.end())) + 1);
+    che[0] = 1, che[1] = 1;
+    for (int i = 2; i < che.size(); i++) {
+        if (che[i])
+            continue;
+        for (int j = 2 * i; j < che.size(); j += i) {
+            che[j] = 1;
+        }
+    }
+
+    int ans = 0;
+    for (auto e : res) {
+        //cout << e << " ";
+        if (che[e] == 0) {
+            ans++;
+            //cout << e << " ";
+        }
+    }
+    cout << ans << endl;
+*/
