@@ -54,6 +54,17 @@ void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
+template <class T>
+vector<T> divisor(T x) {
+    vector<T> ans;
+    for (T i = 1; i * i <= x; i++)
+        if (x % i == 0) {
+            ans.pb(i);
+            if (i * i != x)
+                ans.pb(x / i);
+        }
+    return ans;
+}
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
@@ -61,7 +72,8 @@ typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
-constexpr int inf = 1e9 + 7;
+#define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
+// constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
@@ -69,33 +81,42 @@ constexpr int inf = 1e9 + 7;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    t = 1;
-    //std::cin >> t;
-    while (t--) {
-        INT(n, m);
-        vector<ll> s(4, 1e18);
-        INT(c);
-        while (c--) {
-            LL(x, y);
-            s[0] = min(s[0], x + y);
-            s[1] = min(s[1], x - y);
-            s[2] = min(s[2], -x + y);
-            s[3] = min(s[3], -x - y);
+
+    INT(n);
+    int answer = 0;
+    string name;
+    cin >> name;
+    //////////////////////////
+    string s = name;
+    int S = s.size();
+    for (int i = 0; i < s.size(); i++) {
+        int cnt = s[i] - 'A';
+        if (cnt > 13) {
+            cnt = 'Z' - s[i] + 1;
         }
-        ll ans = 1e18;
-        int aid = -1;
-        INT(h);
-        rep2(i, 1, h) {
-            LL(x, y);
-            ll t = max({x + y - s[0], x - y - s[1], -x + y - s[2], -x - y - s[3]});
-            if (t < ans) {
-                ans = t;
-                aid = i;
+        answer += cnt;
+    }
+    int last = 0;
+    int next = -1, prev;
+    for (int i = s.size() - 1; i >= 0; i--) {
+        if (s[i] != 'A') {
+            last = i;
+            break;
+        }
+    }
+    for (int i = 0; i < s.size(); i++) {
+        if (s[i] != 'A') {
+            if (next == -1)
+                next = i;
+            else {
+                prev = next;
+                next = i;
+                last = min(last, prev * 2 + S - next);
             }
         }
-        cout << ans << endl
-             << aid << endl;
     }
+    answer += last;
+
+    cout << answer << endl;
     return 0;
 }

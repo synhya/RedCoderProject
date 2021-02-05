@@ -85,58 +85,17 @@ int main() {
     cin >> t;
     while (t--) {
         INT(n, m);
-        VEC(int, a, n); // initial
-        VEC(int, b, n); // desired
-        VEC(int, c, m); // painters have.
-
-        vi required;
+        vector<string> e(n);
         rep(i, n) {
-            if (a[i] != b[i]) {
-                required.push_back(i);
-            }
+            cin >> e[i];
         }
-        // 페인터가 b-a보다 작은경우.
-        int req = required.size();
-        if (req > m) {
-            YES(0);
-            continue;
-        }
-        // 페인터가 b-a보다 큰경우.
-        // 마지막에만 같으면 된다.!
-        if (req <= m) { //vi required
-            vector<int> must(m, -1);
-            int flag = 1;
-            for (auto idx : required) {
-                auto paint = find(all(c), b[idx]);
-                if (paint == c.end()) {
-                    flag = 0;
-                    break;
-                }
-                must[paint - c.begin()] = idx;
-                c[paint - c.begin()] = -1e9; // nice one.
+        if (m % 2) {
+            YES();
+            while (m--) {
+                cout << 1 << " " << 2 << " ";
             }
-            if (must[m - 1] == -1) {
-                auto possible = find(all(b), c[m - 1]);
-                if (possible == b.end()) {
-                    flag = 0;
-                }
-                must[m - 1] = possible - b.begin();
-            }
-            if (flag) {
-                YES();
-                rep(i, m) {
-                    if (must[i] == -1) {
-                        cout << must[m - 1] + 1 << " ";
-                    } else {
-                        cout << must[i] + 1 << " ";
-                    }
-                }
-                cout << endl;
-                continue;
-            } else {
-                YES(0);
-                continue;
-            }
+            cout << 1 << endl;
+        } else {
         }
     }
     return 0;

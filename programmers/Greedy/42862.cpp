@@ -54,6 +54,17 @@ void IN(Head &head, Tail &...tail) {
     scan(head);
     IN(tail...);
 }
+template <class T>
+vector<T> divisor(T x) {
+    vector<T> ans;
+    for (T i = 1; i * i <= x; i++)
+        if (x % i == 0) {
+            ans.pb(i);
+            if (i * i != x)
+                ans.pb(x / i);
+        }
+    return ans;
+}
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
@@ -61,6 +72,7 @@ typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
+#define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
@@ -69,17 +81,62 @@ typedef vector<int> vi;
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    std::cin >> t;
-    while (t--) { // 베주의 정리 활용한 문제
-        LL(n, k);
-        VEC(ll, x, n);
-        ll d = 0;
-        rep(i, n - 1) d = __gcd(d, abs(x[i] - x[n - 1]));
-        if ((k - x[n - 1]) % d == 0)
-            YES();
-        else
-            YES(0);
+
+    INT(n);
+    INT(l, r);
+    VEC(int, lost, l);
+    VEC(int, reserve, r);
+    int answer = 0;
+    ///////////////////////////////////////////////
+    // int r = reserve.size();
+    vector<int> student(33);
+    for (int i : reserve)
+        student[i] += 1;
+    for (int i : lost)
+        student[i] += -1;
+    for (int i = 1; i <= n; i++) {
+        if (student[i] == -1) {
+            if (student[i - 1] == 1)
+                student[i - 1] = student[i] = 0;
+            else if (student[i + 1] == 1)
+                student[i] = student[i + 1] = 0;
+        }
     }
+    for (int i = 1; i <= n; i++) {
+        if (student[i] != -1)
+            answer++;
+    }
+    cout << answer << endl;
     return 0;
 }
+/* my answer.
+    answer = n - lost.size();
+    sort(reserve.begin(), reserve.end());
+    sort(lost.begin(), lost.end());
+    for (int i = 0; i < reserve.size(); i++) {
+        int it = find(lost.begin(), lost.end(), reserve[i]) - lost.begin();
+        if (it != lost.size()) {
+            lost[it] = -1;
+            reserve[i] = -1;
+            answer++;
+            continue;
+        }
+    }
+    for (int i = 0; i < reserve.size(); i++) {
+        if (reserve[i] == -1) {
+            continue;
+        }
+        int it = find(lost.begin(), lost.end(), reserve[i] - 1) - lost.begin();
+        if (it != lost.size()) {
+            lost[it] = -1;
+            answer++;
+            continue;
+        }
+        it = find(lost.begin(), lost.end(), reserve[i] + 1) - lost.begin();
+        if (it != lost.size()) {
+            lost[it] = -1;
+            answer++;
+            continue;
+        }
+    }
+*/

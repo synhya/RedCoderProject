@@ -46,6 +46,5 @@ int main() {
     for (auto elm : uset) {
         std::cout << elm << " ";
     }
-    cout << uset[0] << endl;
     return 0;
 }
