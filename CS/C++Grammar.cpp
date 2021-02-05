@@ -15,6 +15,12 @@ public:
     bool operator>(const Human &rhs) const { return age > rhs.age; }
 }; // bool 연산자 정의시 const 두번 꼭 쓰자..
 
+struct compare {
+    bool operator()(pair<int, int> a, pair<int, int> b) {
+        return a.first + a.second > b.second + b.second;
+    }
+}; // pq같은거 생성시에 compare 은 struct 쓰자.
+
 int main() {
     //
     int cnt = x >> 3 & 1; // (3+1)번쨰 자리 1,0 가져오기. (3칸 오른쪽이동하니까)
