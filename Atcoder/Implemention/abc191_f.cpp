@@ -81,7 +81,7 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
@@ -89,10 +89,25 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
+    INT(n);
+    VEC(int, A, n);
+    unordered_map<int, int> g;
+    for (int a : A) {
+        int sq = sqrt(a); // 약수 찾기..!
+        rep2(i, 1, sq) {
+            if (a % i == 0) {
+                g[i] = __gcd(g[i], a); //약수 인덱스에 A넣기
+                g[a / i] = __gcd(g[a / i], a);
+            }
+        }
+    }
+    int mn = *min_element(all(A));
+    int ans = 0;
+    for (auto [x, y] : g) {
+        if (x == y and x <= mn) // x == y >> gcd OR a it self
+            ans++;
     }
 
+    cout << ans << endl;
     return 0;
 }

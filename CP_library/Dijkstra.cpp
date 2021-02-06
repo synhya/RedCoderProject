@@ -13,7 +13,7 @@ void dijkstra(vector<vector<pi>> g, vi &d, int n, int s) {
         int minValue = -pq.top().second;
         pq.pop();
         vis[v] = true;
-        if (d[v] < minValue)
+        if (d[v] < minValue) // this data is old! pq is not following!
             continue;
         for (auto [to, w] : g[v]) {
             if (vis[to])
@@ -27,6 +27,38 @@ void dijkstra(vector<vector<pi>> g, vi &d, int n, int s) {
     }
 }
 /*****************************************************/
+// variation.. ( return to start node version )
+auto dijkstra = [&](int u) {
+    vi d(n, inf);
+    priority_queue<pair<int, int>> pq;
+    // variation.
+    for (auto [v, w] : g[u]) {
+        if (w < d[v]) {
+            d[v] = w;
+            pq.emplace(-d[v], v);
+        }
+    } // push과정에서 시작노드만이아니라 시작노드에서 모든방향 넣기.
+    // pq.push({s,0});
+    // d[s] = 0; /
+    while (!pq.empty()) {
+        auto [dist, c] = pq.top();
+        dist = -dist;
+        pq.pop();
+        if (dist > d[c]) // this data is old! pq is not following!
+            continue;
+        if (c == u)
+            return dist;
+        for (auto [v, w] : g[c]) {
+            if (w + d[c] < d[v]) {
+                d[v] = w + d[c];
+                pq.emplace(-d[v], v);
+            }
+        }
+    }
+    return -1;
+};
+/////////////////////////
+
 // struct version FROM neal.
 const int64_t INF64 = int64_t(2e18) + 5;
 

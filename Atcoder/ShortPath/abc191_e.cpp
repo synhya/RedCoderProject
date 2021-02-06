@@ -68,10 +68,6 @@ vector<T> divisor(T x) {
         }
     return ans;
 }
-template <class T>
-using MaxHeap = std::priority_queue<T>;
-template <class T>
-using MinHeap = std::priority_queue<T, std::vector<T>, std::greater<T>>;
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
@@ -81,7 +77,7 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
@@ -89,10 +85,45 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
-    }
 
+    INT(n, m);
+    vector<vector<pair<int, int>>> g(n);
+    rep(i, m) {
+        INT(a, b, c);
+        --a, --b;
+        g[a].emplace_back(b, c);
+    }
+    auto dijkstra = [&](int u) {
+        vi d(n, inf);
+        priority_queue<pair<int, int>> pq;
+        // variation.
+        for (auto [v, w] : g[u]) {
+            if (w < d[v]) {
+                d[v] = w;
+                pq.emplace(-d[v], v);
+            }
+        } // push과정에서 시작노드만이아니라 시작노드에서 모든방향 넣기.
+        // pq.push({s,0});
+        // d[s] = 0; /
+        while (!pq.empty()) {
+            auto [dist, c] = pq.top();
+            dist = -dist;
+            pq.pop();
+            if (dist > d[c]) // this data is old! pq is not following!
+                continue;
+            if (c == u)
+                return dist;
+            for (auto [v, w] : g[c]) {
+                if (w + d[c] < d[v]) {
+                    d[v] = w + d[c];
+                    pq.emplace(-d[v], v);
+                }
+            }
+        }
+        return -1;
+    };
+    rep(i, n) {
+        cout << (dijkstra(i)) << endl;
+    }
     return 0;
 }

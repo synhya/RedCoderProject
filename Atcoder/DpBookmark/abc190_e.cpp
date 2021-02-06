@@ -81,18 +81,72 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 // cout << rng();
+
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
+
+    INT(n, m);
+    vector<vector<int>> e(n);
+    rep(i, m) {
+        INT(x, y);
+        --x, --y;
+        e[x].push_back(y);
+        e[y].push_back(x);
     }
+    INT(k);
+    vi C(k);
+    for (auto &c : C) {
+        cin >> c;
+        --c;
+    }
+    auto bfs = [&](int s) {
+        vi cost(n, inf);
+        cost[s] = 0; // start node.
+        queue<int> que;
+        que.push(s);
+        while (!que.empty()) {
+            int u = que.front();
+            que.pop();
+            for (auto v : e[u]) {
+                if (chmin(cost[v], cost[u] + 1))
+                    que.push(v);
+            }
+        }
+        // non-cost그래프를 c만있는 cost그래프로 재구성
+        rep(i, k) cost[i] = cost[C[i]];
+        cost.resize(k);
+        return cost;
+    };
+    vector<vector<int>> cost(k);
+    rep(i, k) cost[i] = bfs(C[i]); // cost[i][k-2] . c[i]에서 c[k-2]까지 거리.
+    // TSP 로 만들기 위해서.. 그래프를 c만으로 재구성한다!!!
+    // 원래 그냥 연결만되있던 .. cost는 없던 그래프였다. 이를 변형.
+    vector<vector<int>> dp(1 << k, vector<int>(k, inf));
+    // 1 << k for path. k for end node.
+    rep(i, k) dp[1 << i][i] = 1;             // initialize
+    for (int bit = 1; bit < 1 << k; bit++) { // path
+        for (int i = 0; i < k; i++)
+            if (bit & 1 << i) {          // if its current position is 'i'
+                int bit2 = bit ^ 1 << i; // path until now.
+                for (int j = 0; j < k; j++)
+                    if (bit2 & 1 << j) {
+                        chmin(dp[bit][i], dp[bit2][j] + cost[j][i]);
+                        // e.g. path 0110(bit2) with starting in 0010(j)
+                        // + the cost from (0001)i to (0010)j equals
+                        // path 0111(bit) with starting in 0001(i);
+                    }
+            }
+    }
+    int ans = *min_element(dp.back().begin(), dp.back().end());
+    if (ans == inf)
+        ans = -1;
+    cout << ans << endl;
 
     return 0;
 }
