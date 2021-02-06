@@ -27,6 +27,9 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define VEC(type, name, size) \
     vector<type> name(size);  \
     IN(name)
+#define DBL(...)    \
+    ld __VA_ARGS__; \
+    IN(__VA_ARGS__)
 #define vv(type, name, h, ...) vector<vector<type>> name(h, vector<type>(__VA_ARGS__))
 #define VV(type, name, h, w)                       \
     vector<vector<type>> name(h, vector<type>(w)); \
@@ -68,35 +71,29 @@ vector<T> divisor(T x) {
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
-typedef long long int ll;
+typedef int64_t ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
+mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 // constexpr int inf = 1e9;
 // constexpr i64 inf = 1e18;
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
-
+// cout << rng();
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
-        INT(n, m);
-        vector<string> e(n);
-        rep(i, n) {
-            cin >> e[i];
-        }
-        if (m % 2) {
-            YES();
-            while (m--) {
-                cout << 1 << " " << 2 << " ";
-            }
-            cout << 1 << endl;
-        } else {
-        }
+    DBL(X, Y, R);
+    ll ans = 0;
+    R = nextafter(R, INFINITY);
+    const ll from = ceil(X - R), to = floor(X + R);
+    rep2(x, from, to) {
+        ld d = sqrt(R * R - (X - x) * (X - x));
+        ll from = ceil(Y - d), to = floor(Y + d);
+        ans += to - from + 1;
     }
+    cout << ans << endl;
     return 0;
 }

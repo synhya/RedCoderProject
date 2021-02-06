@@ -117,6 +117,12 @@ int main() {
 
     function<vector<int>(int)> rec = [&](int i) -> vi {}; // 함수선언방식.
     // auto rec방식으로 선언시에는 재귀함수만들수없음!
+
+    rep(i, h - 1) rep(j, w - 1) {
+        if (s[i][j] ^ s[i][j + 1] ^ s[i + 1][j] ^ s[i + 1][j + 1])
+            ans++;
+    } // grid of '.' and '#'
+    // usage of bit operation.. 짝수게 같으면 0. 홀수개같으면 true.
 }
 struct test {
     static constexpr int INF = 1e9 + 7;

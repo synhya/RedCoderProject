@@ -27,9 +27,6 @@ inline bool chmin(T &a, const S &b) { return (a > b ? a = b, 1 : 0); }
 #define VEC(type, name, size) \
     vector<type> name(size);  \
     IN(name)
-#define DBL(...)    \
-    ld __VA_ARGS__; \
-    IN(__VA_ARGS__)
 #define vv(type, name, h, ...) vector<vector<type>> name(h, vector<type>(__VA_ARGS__))
 #define VV(type, name, h, w)                       \
     vector<vector<type>> name(h, vector<type>(w)); \
@@ -71,7 +68,7 @@ vector<T> divisor(T x) {
 using i64 = long long;
 using u64 = unsigned long long;
 using u32 = unsigned;
-typedef int64_t ll;
+typedef long long int ll;
 typedef long double ld;
 typedef pair<int, int> pi;
 typedef vector<int> vi;
@@ -85,10 +82,49 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t;
-    cin >> t;
-    while (t--) {
+    INT(h, w);
+    vector<string> s(h);
+    for (auto &S : s) {
+        cin >> S;
     }
-
+    int ans = 0;
+    rep(i, h - 1) rep(j, w - 1) {
+        if (s[i][j] ^ s[i][j + 1] ^ s[i + 1][j] ^ s[i + 1][j + 1])
+            ans++;
+    }
+    cout << ans << endl;
     return 0;
 }
+/* my answer . Think with small portion..
+    rep2(i, 1, h - 2) {
+        rep2(j, 1, w - 2) {
+            if (s[i][j] == '#') {
+                // for R and L
+                if (s[i][j - 1] == '.') {
+                    ans += 1;
+                    if (s[i - 1][j] == '#' and s[i - 1][j - 1] == '.') {
+                        ans -= 1;
+                    }
+                }
+                if (s[i][j + 1] == '.') {
+                    ans += 1;
+                    if (s[i - 1][j] == '#' and s[i - 1][j + 1] == '.') {
+                        ans -= 1;
+                    }
+                }
+                if (s[i - 1][j] == '.') {
+                    ans += 1;
+                    if (s[i][j - 1] == '#' and s[i - 1][j - 1] == '.') {
+                        ans -= 1;
+                    }
+                }
+                if (s[i + 1][j] == '.') {
+                    ans += 1;
+                    if (s[i][j - 1] == '#' and s[i + 1][j - 1] == '.') {
+                        ans -= 1;
+                    }
+                }
+            }
+        }
+    }
+*/
