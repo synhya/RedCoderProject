@@ -86,13 +86,15 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 // cout << rng();
+void solve() {
+}
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t;
     cin >> t;
     while (t--) {
+        solve();
     }
-
     return 0;
 }
