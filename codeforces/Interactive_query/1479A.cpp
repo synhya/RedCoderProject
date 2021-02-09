@@ -87,19 +87,34 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 // cout << rng();
 void Conpairu() {
-    INT(n,m);
-    vi o(m); // 300 * 1000;
-    vi p(n); // 300 * 1000;
-    for(auto& e : o) {cin >> e; --e;} //  e <= n
-    for(auto& e : p) {cin >> p;} // 1e9
-    INT(q); // 300 * 1000;
-
+    INT(n);
+    vi a(n + 2);
+    a[0] = a[n + 1] = n + 1; // for inf.
+    int l = 1, r = n;
+    auto query = [&](int x) {
+        if (1 <= x and x <= n) { // for a[n+1] and a[0]
+            cout << "? " << x << endl;
+            cout.flush();
+            cin >> a[x];
+        }
+    };
+    while (l < r) {
+        int m = (l + r) / 2;
+        query(m);
+        query(m + 1);
+        if (a[m] < a[m + 1]) // looking for local min
+            r = m;
+        else
+            l = m + 1;
+    }
+    cout << "! " << l << endl;
+    cout.flush();
 }
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while (t--) {
         Conpairu();
     }
