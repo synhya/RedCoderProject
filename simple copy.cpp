@@ -86,87 +86,22 @@ mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 // const int N = 500 * 1000 + 5; // use for N <= 5 * 10^5
 // const int MX = 1e9 + 7; // For convenience, find the answer modulo 10^9+7
 // cout << rng();
-int mex(unordered_set<int> s) {
-    int m = 0;
-    while (s.find(m) != s.end())
-        ++m;
-    return m;
-}
-void solve() {
-    INT(n, m);
-    vector<array<string, 2>> gs(n / 2);
-    rep(i, n / 2) cin >> gs[i][0] >> gs[i][1];
-    string plus;
-    if (n % 2)
-        cin >> plus;
-    vector<int> mem(11);
-    mem[0] = 0;
-    mem[1] = 0;
-    mem[2] = 2;
-    vector<vector<int>> g(21, vector<int>(6));
-    rep(i, 21) g[i][0] = i % 2;
-    g[4][1] = 2;
-    rep2(i, 5, 20) {
-        int k = i / 4;
-        if (i % 2 == 1)
-            g[i][k] = g[i - 1][k] ^ g[1][0];
-        else {
-            unordered_set<int> s;
-            if (i % 4 == 2) {
-                s.insert(g[i - 1][k]);
-                s.insert(g[i - 1][k - 1]);
-                s.insert(g[i - 4][k - 1]);
-                g[i][k] = mex(s);
-            } else {
-                s.insert(g[i - 4][k - 1]);
-                s.insert(g[i - 8][k - 2]);
-                s.insert(g[i - 1][k - 1]);
-                g[i][k] = mex(s);
-            }
-        }
-        //
-        if (i % 2 == 0) {
-            int range = i / 2;
-            mem[range] = g[i][k];
-        }
-    }
-    int gru = 0;
-    for (auto game : gs) {
-        int range = 0;
-        rep(i, m) {
-            if (game[0][i] != game[1][i]) {
-                gru ^= 1;
-                if (range) {
-                    gru ^= mem[range];
-                    range = 0;
-                }
-            } else {
-                if (game[0][i] == '.')
-                    range++;
-                else if (range) {
-                    gru ^= mem[range];
-                    range = 0;
-                }
-            }
-        }
-        if (range) {
-            gru ^= mem[range];
-            range = 0;
-        }
-    }
-    for (auto p : plus) {
-        if (p == '.')
-            gru ^= 1;
-    }
-    int ans = (gru == 0 ? 0 : 1);
-    cout << "MY"[ans] << endl;
+void Conpairu() {
+    INT(n,m);
+    vi o(m); // 300 * 1000;
+    vi p(n); // 300 * 1000;
+    for(auto& e : o) {cin >> e; --e;} //  e <= n
+    for(auto& e : p) {cin >> p;} // 1e9
+    INT(q); // 300 * 1000;
+
 }
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int t = 3;
+    int t = 1;
+    cin >> t;
     while (t--) {
-        solve();
+        Conpairu();
     }
     return 0;
 }

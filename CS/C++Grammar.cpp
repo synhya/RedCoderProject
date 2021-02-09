@@ -123,6 +123,14 @@ int main() {
             ans++;
     } // grid of '.' and '#'
     // usage of bit operation.. 짝수게 같으면 0. 홀수개같으면 true.
+
+    vi a = {1, 2, 3};
+    auto it = find(all(a), 1);
+    if (it != a.end()) {
+        *it = 100;
+    }
+    cout << a[0];
+    // iter로 값변경가능..
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
