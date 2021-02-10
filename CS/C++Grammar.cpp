@@ -21,6 +21,13 @@ struct compare {
     }
 }; // pq같은거 생성시에 compare 은 struct 쓰자.
 
+struct Node {
+    Node *c[2];
+    int cnt;
+
+    Node() : c{0, 0}, cnt(0) {}
+}; // 자기참조 구조체.. linked  list 같은거 만들떄 용이.
+
 int main() {
     //
     int cnt = x >> 3 & 1; // (3+1)번쨰 자리 1,0 가져오기. (3칸 오른쪽이동하니까)
