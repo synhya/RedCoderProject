@@ -27,12 +27,13 @@ typedef vector<int> vi;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
+https: //atcoder.jp/contests/abc185/tasks/abc185_e
 }
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while (t--) {
         Conpairu();
     }

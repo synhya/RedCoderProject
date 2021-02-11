@@ -23,8 +23,8 @@ vector<vector<int>> dp(1 << k, vector<int>(k, inf));
 rep(i, k) dp[1 << i][i] = 1;             // initialize
 for (int bit = 1; bit < 1 << k; bit++) { // path
     for (int i = 0; i < k; i++)
-        if (bit & 1 << i) {          // if its current position is 'i'
-            int bit2 = bit ^ 1 << i; // path until now.
+        if (bit & 1 << i) {          // if started from i
+            int bit2 = bit ^ 1 << i; // path until now. except start
             for (int j = 0; j < k; j++)
                 if (bit2 & 1 << j) {
                     chmin(dp[bit][i], dp[bit2][j] + cost[i][j]);
@@ -39,7 +39,6 @@ int ans = *min_element(dp.back().begin(), dp.back().end());
 // from begin to end. for every starting node.
 
 //another example with START in 0 END in 0;
-// 3차원에서는 chmin(dist[i][j], dist[i][k] + dist[k][j]) 잊지말자 !!
 int k = 1 << n;
 vector<vi> dp(k, vi(n, inf));
 dp[1 << 0][0] = 0; // 어디서든 시작할수 있는게 아니니까.
@@ -47,8 +46,8 @@ rep(i, k) rep(j, n) {
     if (dp[i][j] == inf)
         continue;
     rep(to, n) {
-        if (i & (1 << to))
-            continue;
+        if (i & (1 << to)) // chmin(dist[i][j], dist[i][k] + dist[k][j])
+            continue;      //이거 미리 해놔서 돌아갔다 가는거 생략하는거다!
         chmin(dp[i ^ (1 << to)][to], dp[i][j] + cost[j][to]);
     }
 }
