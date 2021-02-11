@@ -27,7 +27,37 @@ constexpr int inf = 1e9;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
-https: //codeforces.com/contest/1137/status/B
+    int n;
+    cin >> n;
+    vector<vi> cost(n, vi(n));
+    // n^2
+    vi x(n), y(n), z(n);
+    rep(i, n) {
+        cin >> x[i] >> y[i] >> z[i];
+    }
+    rep(i, n) rep(j, n) {
+        cost[j][i] = abs(x[i] - x[j]) + abs(y[i] - y[j]) + max(0, z[i] - z[j]);
+    }
+    rep(k, n) rep(i, n) rep(j, n) {
+        cost[i][j] = min(cost[i][j], cost[i][k] + cost[k][j]);
+    }
+    int k = 1 << n;
+    vector<vi> dp(k, vi(n, inf));
+    dp[1 << 0][0] = 0; // 어디서든 시작할수 있는게 아니니까.
+    rep(i, k) rep(j, n) {
+        if (dp[i][j] == inf)
+            continue;
+        rep(to, n) {
+            if (i & (1 << to))
+                continue;
+            chmin(dp[i ^ (1 << to)][to], dp[i][j] + cost[j][to]);
+        }
+    }
+    int ans = inf;
+    rep(j, n) {
+        chmin(ans, dp.back()[j] + cost[j][0]);
+    }
+    cout << ans << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);

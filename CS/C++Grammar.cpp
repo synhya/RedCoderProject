@@ -138,6 +138,9 @@ int main() {
     }
     cout << a[0];
     // iter로 값변경가능..
+
+    s.substr(2, 4) // [pos, pos + count)
+    // 2에서 3이아니라 2 에서 2+4) 즉 5까지 반환.
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
