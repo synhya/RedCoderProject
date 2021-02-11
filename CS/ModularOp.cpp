@@ -7,6 +7,13 @@ const int N = 200 * 1000 + 5;
 const int MX = 1e9 + 7;
 const int P = 1e9 + 7;
 #define MOD 998244353 // this is also prime number.
+////////////////////////////////////////
+////// minus operation with modular . ((A - B) + n) % n
+////// multiple operation with modular (A * B) % n
+////// plus operation with modular (A + B) % n
+////// divide operaion with modular a * power(b, n - 2) % n  // n is prime.
+////////////////////////////////////////////
+//
 
 int minus(int a, int b) {
     return ((a % P) - (b % P) + P) % P;

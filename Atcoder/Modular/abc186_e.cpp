@@ -25,19 +25,37 @@ typedef vector<int> vi;
 // constexpr int_64t inf = 1e18;
 // const int N = 100 * 1000 + 5;
 // const int mod = 1e9 + 7;
+tuple<int, int, int> ext_gcd(int a, int b) { // 1. a = bq + r;
+    if (b == 0)
+        return {a, 1, 0}; // 3. r = 0
+    int g, x, y;
+    tie(g, x, y) = ext_gcd(b, a % b); // 2. b = rq` + r`
+    return {g, y, x - (a / b) * y};
+}
 
 void Conpairu() {
-    int n, s, k;
+    ll n, s, k;
     cin >> n >> s >> k;
-    int st = s;
-    int ans = 0;
-https: //atcoder.jp/contests/abc186/tasks/abc186_e
+    ll g, x, y;
+    tie(g, x, y) = ext_gcd(k, n);
+    // we find ny + kx and need only x.
+    if (s % g == 0) {
+        n /= g;
+        s /= g;
+        k /= g;
+        ll ans = ((x * -s) % n + n) % n;
+        // minus operation with modular . ((A - B) + n) % n
+        // multiple operation with modular (A * B) % n
+        cout << ans << endl;
+    } else {
+        cout << -1 << endl;
+    }
 }
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t = 1;
-    //cin >> t;
+    cin >> t;
     while (t--) {
         Conpairu();
     }
