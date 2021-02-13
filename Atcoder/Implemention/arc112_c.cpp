@@ -28,6 +28,49 @@ typedef vector<int> vi;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
+    int n;
+    cin >> n;
+    vi p(n - 1);
+    for (auto &v : p)
+        cin >> v, --v;
+    vector<vi> e(n);
+    rep(i, n - 1) {
+        e[p[i]].push_back(i + 1);
+    }
+    vi sz(n, 1), f(n, 1);
+    const auto dfs = [&](auto &&dfs, int u) -> void {
+        int sum = 0;
+        vi seq;
+        for (auto v : e[u]) {
+            dfs(dfs, v);
+            sz[u] += sz[v];
+            if (sz[v] % 2) {
+                seq.push_back(f[v]);
+            } else {
+                if (f[v] < 0) {
+                    f[u] += f[v];
+                } else {
+                    sum += f[v];
+                }
+            }
+        }
+        sort(all(seq));
+        // aoki choose every first time enters.
+        // and before every node is visited in that subtree.
+        // it never exits before that. so this is possible.
+        // Noticing this will lead to answer.! //
+        seq.push_back(sum);
+        rep(i, seq.size()) {
+            if (i % 2) {
+                f[u] -= seq[i]; // aoki takes second
+            } else {
+                f[u] += seq[i]; // takahashi takes first
+            }
+        }
+    };
+    dfs(dfs, 0);
+    cout << (n + f[0]) / 2 << endl;
+    // (t - a + t + a) / 2 = ans.
 }
 int main() {
     std::ios::sync_with_stdio(false);

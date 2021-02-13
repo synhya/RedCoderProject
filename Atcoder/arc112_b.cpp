@@ -1,7 +1,6 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define all(c) c.begin(), c.end()
-#define rall(c) c.rbegind(), c.rend()
 #define rep(i, n) for (int i = 0; i < n; ++i)
 #define rep2(i, a, b) for (int i = a; i <= b; ++i)
 #define rep3(i, a, b) for (int i = a; i >= b; --i)
@@ -28,6 +27,15 @@ typedef vector<int> vi;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
+    ll b, c;
+    cin >> b >> c;
+    ll ans = 0;
+    ll l1 = b - c / 2, r1 = b + max(c - 2, 0ll) / 2; // if c is 0. not -1
+    ll l2 = -b - (c - 1) / 2, r2 = -b + (c - 1) / 2;
+    ans += r1 - l1 + 1;
+    ans += r2 - l2 + 1;
+    ans -= max(0ll, min(r1, r2) - max(l1, l2) + 1);
+    cout << ans << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);

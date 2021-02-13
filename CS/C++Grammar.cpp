@@ -139,8 +139,24 @@ int main() {
     cout << a[0];
     // iter로 값변경가능..
 
-    s.substr(2, 4) // [pos, pos + count)
-    // 2에서 3이아니라 2 에서 2+4) 즉 5까지 반환.
+    s.substr(2, 4); // [pos, pos + count)
+        // 2에서 3이아니라 2 에서 2+4) 즉 5까지 반환.
+
+    const auto rec = [&](auto &&rec, int v) {};
+    //이렇게하면 재귀함수 편하게사용가능.
+
+    int *a; // ok it can be null
+    int &b; // it cant be null. define when initialize. > MORE SAFE
+    //자바의 타입스크립트처럼 제약사항으로 안정성 UP
+
+    int &&c = 1; // 우측값 참조.. 원래 복사되고 바로 파괴 되는 우측값을.
+    // 자주써야하는경우 이렇게 유지시켜준다..
+    int b = 1;
+    int d = 1; // 1 , 1 둘다 복사, 파괴(임시값) 반복.
+    //
+    int b = c;
+    int d = c; // 복사,파괴안하고 참조값처럼 우측값을 이용한다.
+    // >> 퍼포먼스 상승
 }
 struct test {
     static constexpr int INF = 1e9 + 7;
