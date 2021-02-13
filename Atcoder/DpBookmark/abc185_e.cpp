@@ -21,18 +21,34 @@ typedef pair<int, int> pi;
 typedef vector<int> vi;
 #define UNIQUE(x) sort(all(x)), x.erase(unique(all(x)), x.end())
 // mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-// constexpr int inf = 1e9;
+constexpr int inf = 1e9;
 // constexpr int_64t inf = 1e18;
 // const int N = 100 * 1000 + 5;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
+    int n, m;
+    cin >> n >> m;
+    vi a(n), b(m);
+    rep(i, n) cin >> a[i];
+    rep(i, m) cin >> b[i];
+    vector<vi> dp(n + 1, vi(m + 1, inf));
+    dp[0][0] = 0;
+    rep(i, n + 1) rep(j, m + 1) {
+        if (i < n)
+            chmin(dp[i + 1][j], dp[i][j] + 1);
+        if (j < m)
+            chmin(dp[i][j + 1], dp[i][j] + 1);
+        if (i < n && j < m)
+            chmin(dp[i + 1][j + 1], dp[i][j] + (a[i] != b[j]));
+    }
+    cout << dp[n][m] << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
     int t = 1;
-    cin >> t;
+    //cin >> t;
     while (t--) {
         Conpairu();
     }

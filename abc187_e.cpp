@@ -27,7 +27,54 @@ typedef vector<int> vi;
 // const int mod = 1e9 + 7;
 
 void Conpairu() {
-https: //atcoder.jp/contests/abc187/tasks/abc187_e
+    int n;
+    cin >> n;
+    vector<vi> g(n);
+    vector<pi> e(n - 1);
+    rep(i, n - 1) {
+        int u, v;
+        cin >> u >> v;
+        --u, --v;
+        g[u].push_back(v); // a to b
+        g[v].push_back(u);
+        e[i] = {u, v};
+    }
+    int q;
+    cin >> q;
+    ll dc = 0;
+    vector<pi> c(n);
+    rep(i, q) {
+        int t, ed, x;
+        cin >> t >> ed >> x;
+        --ed;
+        if (t == 1)
+            dc += x, x = -x;
+        c[e[ed].second].first += x;
+        c[e[ed].second].second = e[ed].first;
+    }
+    vector<ll> res(n, dc);
+    rep(i, n) {
+        if (c[i].first == 0)
+            continue;
+        vi stk, vis(n);
+        vis[c[i].second] = 1;
+        stk.push_back(i);
+        while (stk.size()) {
+            int u = stk.back();
+            stk.pop_back();
+            if (vis[u])
+                continue;
+            vis[u] = 1;
+            res[u] += c[i].first; // 모든곳에 c[i]업데이트
+            for (auto v : g[u]) {
+                if (vis[v])
+                    continue;
+                stk.push_back(v);
+            }
+        }
+    }
+    for (auto rs : res)
+        cout << rs << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);

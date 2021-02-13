@@ -38,7 +38,7 @@
         },
         //C 컴파일
         {
-            "label": "---------------------------",
+            "label": "xxxxxxxxxxxxxxxxxxxxxxxxx",
             "command": "gcc",
             "args": [
                 "${file}",
