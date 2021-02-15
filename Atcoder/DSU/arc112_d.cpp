@@ -26,8 +26,46 @@ typedef vector<int> vi;
 // constexpr int_64t inf = 1e18;
 // const int N = 100 * 1000 + 5;
 // const int mod = 1e9 + 7;
+class dsu {
+public:
+    vector<int> p;
+    int n;
+    dsu(int _n) : n(_n) {
+        p.resize(n);
+        iota(p.begin(), p.end(), 0);
+    }
+    inline int get(int x) {
+        return (x == p[x] ? x : (p[x] = get(p[x])));
+    } // find 함수 역할
+    inline bool unite(int x, int y) {
+        x = get(x);
+        y = get(y);
+        p[x] = y;
+        return x != y;
+    }
+};
 
 void Conpairu() {
+    int h, w;
+    cin >> h >> w;
+    vector<string> s(h);
+    for (auto &st : s)
+        cin >> st;
+    s[0][0] = s[0][w - 1] = s[h - 1][0] = s[h - 1][w - 1] = '#';
+
+    dsu d(h + w);
+    rep(r, h) {
+        rep(c, w) {
+            if (s[r][c] == '#')
+                d.unite(r, h + c);
+        }
+    }
+
+    unordered_set<int> row, col;
+    rep(r, h) row.insert(d.get(r));
+    rep(c, w) col.insert(d.get(h + c));
+
+    cout << min(row.size() - 1, col.size() - 1) << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);

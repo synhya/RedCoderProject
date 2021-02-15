@@ -5,6 +5,7 @@ using namespace std;
 #define rep(i, n) for (int i = 0; i < n; ++i)
 #define rep2(i, a, b) for (int i = a; i <= b; ++i)
 #define rep3(i, a, b) for (int i = a; i >= b; --i)
+#define rep3(i, a, b) for (int i = a; i >= b; --i)
 #define endl '\n'
 #define lb(c, x) distance((c).begin(), lower_bound(all(c), (x)))
 #define ub(c, x) distance((c).begin(), upper_bound(all(c), (x)))
@@ -26,16 +27,23 @@ typedef vector<int> vi;
 // constexpr int_64t inf = 1e18;
 // const int N = 100 * 1000 + 5;
 // const int mod = 1e9 + 7;
-
-void Conpairu() {
+// const int mod = 998244353;
+void conpairu() {
+    int n, m;
+    cin >> n >> m;
+    vi p(n);
+    for (auto &e : p)
+        cin >> e;
+    // minimal step to p
 }
+
 int main() {
-    std::ios::sync_with_stdio(false);
-    std::cin.tie(nullptr);
-    int t = 1;
-    //cin >> t;
+    cin.tie(0);
+    ios::sync_with_stdio(false);
+    int t;
+    cin >> t;
     while (t--) {
-        Conpairu();
+        conpairu();
     }
     return 0;
 }
