@@ -39,42 +39,48 @@ void Conpairu() {
         g[v].push_back(u);
         e[i] = {u, v};
     }
-    int q;
-    cin >> q;
-    ll dc = 0;
-    vector<pi> c(n);
-    rep(i, q) {
-        int t, ed, x;
-        cin >> t >> ed >> x;
-        --ed;
-        if (t == 1)
-            dc += x, x = -x;
-        c[e[ed].second].first += x;
-        c[e[ed].second].second = e[ed].first;
-    }
-    vector<ll> res(n, dc);
-    rep(i, n) {
-        if (c[i].first == 0)
-            continue;
-        vi stk, vis(n);
-        vis[c[i].second] = 1;
-        stk.push_back(i);
-        while (stk.size()) {
-            int u = stk.back();
-            stk.pop_back();
-            if (vis[u])
-                continue;
-            vis[u] = 1;
-            res[u] += c[i].first; // 모든곳에 c[i]업데이트
-            for (auto v : g[u]) {
-                if (vis[v])
-                    continue;
-                stk.push_back(v);
+    vector<ll> depth(n, -1);
+    depth[0] = 0;
+    vector<ll> stk = {0};
+    while (stk.size()) {
+        ll at = stk.back();
+        stk.pop_back();
+        for (ll i : g[at])
+            if (depth[i] == -1) {
+                depth[i] = depth[at] + 1;
+                stk.push_back(i);
             }
+    }
+    vector<ll> s(n);
+    ll Q;
+    cin >> Q;
+    while (Q--) {
+        ll t, ed, x;
+        cin >> t >> ed >> x;
+        auto [a, b] = e[ed - 1];
+        if (depth[a] > depth[b]) {
+            swap(a, b);
+            t ^= 3; // 1 or 2 so its like 10 ^ 11 > 1
+        }
+        if (t == 1) {
+            s[0] += x;
+            s[b] -= x; // for not childs only. t == 1
+        } else {
+            s[b] += x;
         }
     }
-    for (auto rs : res)
-        cout << rs << endl;
+    stk = {0};
+    while (stk.size()) {
+        ll u = stk.back();
+        stk.pop_back();
+        for (ll v : g[u])
+            if (depth[u] < depth[v]) {
+                s[v] += s[u];
+                stk.push_back(v);
+            }
+    }
+    for (ll i : s)
+        cout << i << endl;
 }
 int main() {
     std::ios::sync_with_stdio(false);
