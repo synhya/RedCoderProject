@@ -3,8 +3,6 @@
 - my daily log of solving cp.
 - contains answers from other coders
 
-- [atcoder](https://atcoder.jp/users/Silent_Siren_fan).
-
 ## CS folder contains what i learned from problems.
 
 - helpful site.(changes often)
